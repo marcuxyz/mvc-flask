@@ -1,8 +1,16 @@
 [tool.poetry]
 name = "mvc-flask"
-version = "1.0.0"
-description = "Library to make Flask MVC"
+version = "1.0.1"
+description = "turn standard flask into mvc"
 authors = ["Marcus Pereira <oi@negros.dev>"]
+
+readme = "README.md"
+license = "MIT"
+keywords = ["flask", "flask extensions", "flask mvc", "flask-mvc", "mvc flask", "flask design pattern"]
+
+repository = "https://github.com/marcuxyz/mvc_flask"
+homepage = "https://github.com/marcuxyz/mvc_flask"
+
 
 [tool.poetry.dependencies]
 python = "~3.9"
