@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "mvc-flask"
+version = "1.0.0"
+description = "Library to make Flask MVC"
+authors = ["Marcus Pereira <oi@negros.dev>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+ward = "^0.63.0-beta.0"
+python-dotenv = "^0.19.0"
+black = "^21.8b0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

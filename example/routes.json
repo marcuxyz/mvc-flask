@@ -1,0 +1,26 @@
+[
+  {
+    "method": "GET",
+    "path": "/",
+    "controller": "home",
+    "action": "index"
+  },
+  {
+    "method": "get",
+    "path": "/new",
+    "controller": "home",
+    "action": "new"
+  },
+  {
+    "method": "post",
+    "path": "/create",
+    "controller": "home",
+    "action": "create"
+  },
+  {
+    "method": "GET",
+    "path": "/contact",
+    "controller": "contact",
+    "action": "index"
+  }
+]
