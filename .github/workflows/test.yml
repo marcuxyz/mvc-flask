@@ -20,14 +20,19 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install poetry
-        if [ -f poetry.lock ]; then poetry install; fi
+
+    - name: Install Poetry
+      uses: Gr1N/setup-poetry@v4
+
+    - name: Disables creation of virtualenvs
+      run: poetry config virtualenvs.create false
+
+    - name: Install dependencies
+      run: poetry install
+
     - name: run lint
       run: |
-        poetry run make check
+        make check
     - name: run tests
       run: |
-        poetry run make test
+        make test
