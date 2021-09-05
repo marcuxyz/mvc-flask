@@ -44,17 +44,14 @@ app.config["FLASK_MVC_DIR"] = "sample_app"
 app
 ├── __ini__.py
 ├── controllers
-│   ├── contact_controller.py
 │   └── home_controller.py
-├── model
+├── models
 ├── routes.json
 └── views
     ├── index.html
-    └── post
-        └── new.html
 ```
 
-The routes will be something as:
+The `routes.json` file should be like this:
 
 ```json
 [
@@ -64,25 +61,17 @@ The routes will be something as:
     "controller": "home",
     "action": "index"
   },
-  {
-    "method": "get",
-    "path": "/new",
-    "controller": "home",
-    "action": "new"
-  },
-  {
-    "method": "post",
-    "path": "/create",
-    "controller": "home",
-    "action": "create"
-  },
-  {
-    "method": "GET",
-    "path": "/contact",
-    "controller": "contact",
-    "action": "index"
-  }
 ]
+```
+
+The `home_controller.py` file should be like this:
+
+```python
+from flask.templating import render_template
+
+class HomeController:
+    def index(self):
+        return render_template("index.html")
 ```
 
 # Tests
