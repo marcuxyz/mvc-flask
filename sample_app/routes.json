@@ -3,7 +3,11 @@
     "method": "GET",
     "path": "/",
     "controller": "home",
-    "action": "index"
+    "action": "index",
+    "hooks": {
+      "before_request": "aftermoon",
+      "after_request": "last"
+    }
   },
   {
     "method": "GET",
