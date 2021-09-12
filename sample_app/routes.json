@@ -6,18 +6,6 @@
     "action": "index"
   },
   {
-    "method": "get",
-    "path": "/new",
-    "controller": "home",
-    "action": "new"
-  },
-  {
-    "method": "post",
-    "path": "/create",
-    "controller": "home",
-    "action": "create"
-  },
-  {
     "method": "GET",
     "path": "/contact",
     "controller": "contact",
