@@ -2,7 +2,7 @@
 
 You can use the mvc pattern in your flask application using this extension.
 
-# Installation
+## Installation
 
 Run the follow command to install `mvc_flask`:
 
@@ -10,17 +10,20 @@ Run the follow command to install `mvc_flask`:
 $ pip install mvc_flask
 ```
 
-# Configuration
+## Configuration
 
-To configure the `mvc_flask` you need import and register in your application:
+To configure the `mvc_flask` you need import and register in your application, e.g:
 
 
 ```python
+from flask import Flask
 from mvc_flask import FlaskMVC
-mvc = FlaskMVC()
+
+app = Flask(__name__)
+FlaskMVC(app)
 ```
 
-Or use factory function
+Or use `application factories`, e.g:
 
 ```python
 mvc = FlaskMVC()
@@ -30,49 +33,48 @@ def create_app():
   mvc.init_app(app)
 ```
 
-By default the `mvc_flask` assumes that your application directory will be `app`, but, you can change it. Passing the object of configuration:
+**By default the `mvc_flask` assumes that your application directory will be `app` and if it doesn't exist, create it!**
 
-```python
-app.config["FLASK_MVC_DIR"] = "sample_app"
-```
-
-# Create MVC Pattern
-
-`mvc_flask` assumes that your application will have these characteristics: 
+You structure should be look like this: 
 
 ```text
 app
 ├── __ini__.py
 ├── controllers
 │   └── home_controller.py
-├── models
-├── routes.json
+├── routes.py
 └── views
     ├── index.html
 ```
 
-The `routes.json` file should be like this:
-
-```json
-[
-  {
-    "method": "GET",
-    "path": "/",
-    "controller": "home",
-    "action": "index"
-  },
-]
-```
-
-The `home_controller.py` file should be like this:
+## Router
+You can create routes in `app/routes.py` and after create file, you can start register routes, e.g:
 
 ```python
-from flask.templating import render_template
+from mvc_flask import Router
+
+Router.get("/", "home#index")
+```
+
+The same must be make done to `POST`, `PUT` and `DELETE` methods. E.g: `Router.post("/messages", "messages#create")`
+
+The first param represent the relative path and second represent the `controller#action`. Remember that we are working with `MVC pattern`, so we have `controller` and `action`.
+
+The `controller` can be created in `app/controllers` and action is method of `controller`.
+
+## Controller
+
+Now that configure routes, the `home_controller.py` file must contain the `HomeController` class, registering the `action`, e.g:  
+
+```python
+from flask import render_template
 
 class HomeController:
     def index(self):
         return render_template("index.html")
 ```
+
+If you have question, please, check de [app](https://github.com/marcuxyz/mvc_flask/tree/main/app) directory to more details.
 
 # Tests
 
@@ -81,5 +83,3 @@ You can run the tests, executing the follow command:
 ```shell
 $ make test
 ```
-
-![](/prints/test_runner.png)

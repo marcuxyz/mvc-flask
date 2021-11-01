@@ -1,55 +1,36 @@
 from importlib import import_module
-import json
-
 from pathlib import Path
+
 from flask import Flask
 from flask.blueprints import Blueprint
-from collections import namedtuple
 
-
-Route = namedtuple("Route", ["method", "path", "controller", "action"])
+from .router import Router
 
 
 class FlaskMVC:
-    def __init__(self, app: Flask = None, directory: str = "app"):
-        self.directory = Path(directory)
-
+    def __init__(self, app: Flask = None):
         if app is not None:
             self.init_app(app)
 
     def init_app(self, app):
-        self.create_blueprint(app)
+        app.template_folder = "views"
 
-    def routes(self):
-        routes = []
-        with open(self.directory / "routes.json", mode="r") as f:
-            routes = [
-                Route(
-                    route["method"],
-                    route["path"],
-                    route["controller"],
-                    route["action"],
+        self.register_blueprint(app)
+
+    def register_blueprint(self, app: Flask):
+        # load routes defined from users
+        import_module(f"app.routes")
+
+        for route in Router._method_route().items():
+            controller = route[0]
+            blueprint = Blueprint(controller, controller)
+            obj = import_module(f"app.controllers.{controller}_controller")
+            view_func = getattr(obj, f"{controller.title()}Controller")
+            for resource in route[1]:
+                blueprint.add_url_rule(
+                    rule=resource.path,
+                    endpoint=resource.action,
+                    view_func=getattr(view_func(), resource.action),
+                    methods=[resource.method],
                 )
-                for route in json.load(f)
-            ]
-        return routes
-
-    def create_blueprint(self, app: Flask):
-        for route in self.routes():
-            dd = (
-                self.directory
-                / "controllers"
-                / f"{route.controller}_controller"
-            )
-
-            obj = import_module(dd.as_posix().replace("/", "."))
-            controller = getattr(obj, f"{route.controller.title()}Controller")
-
-            blueprint = Blueprint(route.controller, route.controller)
-            blueprint.add_url_rule(
-                rule=route.path,
-                endpoint=route.action,
-                view_func=getattr(controller(), route.action),
-                methods=[route.method],
-            )
             app.register_blueprint(blueprint)
