@@ -76,6 +76,10 @@ class HomeController:
 
 If you have question, please, check de [app](https://github.com/marcuxyz/mvc_flask/tree/main/app) directory to more details.
 
+## Views
+
+Flask use the `templates` directory by default to store `HTMLs` files. However, using the `mvc-flask` the default becomes `views`. You can use the `app/views` directory to stores templates.
+
 # Tests
 
 You can run the tests, executing the follow command:
