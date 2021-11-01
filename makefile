@@ -1,6 +1,6 @@
 .PHONY: test
 test:
-	@ward
+	FLAKS_ENV=testing ward
 
 	
 .PHONY: format
