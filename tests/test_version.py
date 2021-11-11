@@ -4,4 +4,4 @@ from ward import test, expect
 
 @test("check version")
 def _():
-    expect.assert_equal(__version__, "2.0.0", None)
+    expect.assert_equal(__version__, "2.1.0", None)

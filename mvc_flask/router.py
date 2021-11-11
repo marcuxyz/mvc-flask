@@ -46,3 +46,47 @@ class Router:
         Router.ROUTES.append(
             {controller: Model("DELETE", path, controller, action)}
         )
+
+    @staticmethod
+    def all(resource: str, only=None):
+        group = [
+            "index",
+            "show",
+            "new",
+            "create",
+            "edit",
+            "update",
+            "delete",
+        ]
+        actions = only.split() if isinstance(only, str) else only
+        Router._add_routes(resource, actions if actions else group)
+
+    @staticmethod
+    def _add_routes(name, actions):
+        groups = {
+            "index": "get",
+            "new": "get",
+            "create": "post",
+        }
+        parameters = {
+            "show": "get",
+            "edit": "get",
+            "update": "put",
+            "delete": "delete",
+        }
+        urls = {
+            "new": "/new",
+            "edit": "/<id>/edit",
+            "show": "/<id>",
+            "update": "/<id>",
+            "delete": "/<id>",
+        }
+
+        for action in actions:
+            path = f"/{name}{urls[action]}" if action in urls else f"/{name}"
+
+            if action in parameters:
+                getattr(Router, parameters[action])(path, f"{name}#{action}")
+                continue
+
+            getattr(Router, groups[action])(path, f"{name}#{action}")

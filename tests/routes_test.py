@@ -1,6 +1,5 @@
 from collections import Counter
 
-from flask import url_for
 from ward import test
 
 from tests.fixtures import test_client
@@ -38,7 +37,7 @@ def _(client=test_client):
     assert "home.hello" in endpoints
 
 
-@test("count GET routes")
+@test("count GET")
 def _(client=test_client):
     methods = [
         route
@@ -46,4 +45,37 @@ def _(client=test_client):
         for route in routes.methods
     ]
 
-    assert methods.count("GET") == 3
+    assert methods.count("GET") == 10
+
+
+@test("count POST")
+def _(client=test_client):
+    methods = [
+        route
+        for routes in client.application.url_map.iter_rules()
+        for route in routes.methods
+    ]
+
+    assert methods.count("POST") == 2
+
+
+@test("count PUT")
+def _(client=test_client):
+    methods = [
+        route
+        for routes in client.application.url_map.iter_rules()
+        for route in routes.methods
+    ]
+
+    assert methods.count("PUT") == 1
+
+
+@test("count DELETE")
+def _(client=test_client):
+    methods = [
+        route
+        for routes in client.application.url_map.iter_rules()
+        for route in routes.methods
+    ]
+
+    assert methods.count("DELETE") == 1

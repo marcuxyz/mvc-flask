@@ -62,6 +62,41 @@ The first param represent the relative path and second represent the `controller
 
 The `controller` can be created in `app/controllers` and action is method of `controller`.
 
+You can use `Router.all()` to register all routes of `CRUD`.
+
+```python
+Router.all("users")
+```
+
+The previous command produce this:
+
+```shell
+users.create     POST     /users
+users.delete     DELETE   /users/<id>
+users.edit       GET      /users/<id>/edit
+users.index      GET      /users
+users.new        GET      /users/new
+users.show       GET      /users/<id>
+users.update     PUT      /users/<id>
+```
+
+You can also use `only parameter` to controll routes, e.g:
+
+```python
+Router.all("messages", only="index show new create")
+```
+
+The previous command produce this:
+
+```shell
+messages.create  POST     /messages
+messages.index   GET      /messages
+messages.new     GET      /messages/new
+messages.show    GET      /messages/<id>
+```
+
+The paramenter `only` accept `string` or `array`, so, you can use `only=["index", "show", "new", "create"]`
+
 ## Controller
 
 Now that configure routes, the `home_controller.py` file must contain the `HomeController` class, registering the `action`, e.g:  
