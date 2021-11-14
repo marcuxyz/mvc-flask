@@ -1,6 +1,6 @@
 from importlib import import_module
 
-from flask import Flask
+from flask import Flask, render_template, request
 from flask.blueprints import Blueprint
 
 from .router import Router
@@ -37,7 +37,9 @@ class FlaskMVC:
                     endpoint=resource.action,
                     view_func=getattr(view_func(), resource.action),
                     methods=[resource.method],
+                    defaults=dict(view=render_template, request=request),
                 )
+
             app.register_blueprint(blueprint)
 
 
