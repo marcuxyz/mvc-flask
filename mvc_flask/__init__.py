@@ -1,5 +1,4 @@
 from importlib import import_module
-from pathlib import Path
 
 from flask import Flask
 from flask.blueprints import Blueprint
@@ -13,6 +12,8 @@ class FlaskMVC:
             self.init_app(app)
 
     def init_app(self, app):
+        self.hook = Hook()
+
         app.template_folder = "views"
 
         self.register_blueprint(app)
@@ -24,8 +25,12 @@ class FlaskMVC:
         for route in Router._method_route().items():
             controller = route[0]
             blueprint = Blueprint(controller, controller)
+
             obj = import_module(f"app.controllers.{controller}_controller")
             view_func = getattr(obj, f"{controller.title()}Controller")
+
+            self.hook.register(view_func, blueprint)
+
             for resource in route[1]:
                 blueprint.add_url_rule(
                     rule=resource.path,
@@ -34,3 +39,16 @@ class FlaskMVC:
                     methods=[resource.method],
                 )
             app.register_blueprint(blueprint)
+
+
+class Hook:
+    def register(self, ctrl, blueprint):
+        accept_attributes = ["before_recquest"]
+        attrs = [attr for attr in dir(ctrl()) if attr in accept_attributes]
+        if attrs:
+            for attr in attrs:
+                values = getattr(ctrl(), attr)
+
+                for value in values:
+                    hook_method = getattr(ctrl(), value)
+                    getattr(blueprint, attr)(hook_method)
