@@ -45,7 +45,15 @@ class FlaskMVC:
 
 class Hook:
     def register(self, ctrl, blueprint):
-        accept_attributes = ["before_recquest"]
+        accept_attributes = [
+            "before_request",
+            "after_request",
+            "teardown_request",
+            "after_app_request",
+            "before_app_request",
+            "teardown_app_request",
+            "before_app_first_request",
+        ]
         attrs = [attr for attr in dir(ctrl()) if attr in accept_attributes]
         if attrs:
             for attr in attrs:

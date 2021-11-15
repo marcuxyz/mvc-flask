@@ -102,14 +102,27 @@ The paramenter `only` accept `string` or `array`, so, you can use `only=["index"
 Now that configure routes, the `home_controller.py` file must contain the `HomeController` class, registering the `action`, e.g:  
 
 ```python
-from flask import render_template
-
 class HomeController:
-    def index(self):
-        return render_template("index.html")
+    def index(self, view, request):
+        return view("index.html")
 ```
 
 If you have question, please, check de [app](https://github.com/marcuxyz/mvc_flask/tree/main/app) directory to more details.
+
+To use the hooks as `before_request`, `after_request` and etc... Just describe it in the controller, see:
+
+```python
+class HomeController:
+    before_request = ["hi"]
+
+    def index(self, view, request):
+        return "home"
+
+    def hi(self):
+        ...
+```
+
+The previous example describes the `hi(self)` will be called every times that the visitors access the controller.
 
 ## Views
 
