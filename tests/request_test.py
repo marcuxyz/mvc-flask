@@ -39,18 +39,14 @@ def _(client=client):
     assert resp.status_code == 200
 
 
-@test(
-    "should return status 200 for GET (/messages/update/1)", tags=["request"]
-)
+@test("should return status 200 for GET (/messages/update/1)", tags=["request"])
 def _(client=client):
     resp = client.put(url_for("messages.update", id=1))
 
     assert resp.status_code == 202
 
 
-@test(
-    "should return status 200 for GET (/messages/delete/1)", tags=["request"]
-)
+@test("should return status 200 for GET (/messages/delete/1)", tags=["request"])
 def _(client=client):
     resp = client.delete(url_for("messages.delete", id=1))
 
