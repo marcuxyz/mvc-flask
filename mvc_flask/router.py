@@ -22,12 +22,16 @@ class Router:
     @staticmethod
     def get(path: str, resource: str):
         controller, action = resource.split("#")
-        Router.ROUTES.append({controller: Model(["GET"], path, controller, action)})
+        Router.ROUTES.append(
+            {controller: Model(["GET"], path, controller, action)}
+        )
 
     @staticmethod
     def post(path: str, resource: str):
         controller, action = resource.split("#")
-        Router.ROUTES.append({controller: Model(["POST"], path, controller, action)})
+        Router.ROUTES.append(
+            {controller: Model(["POST"], path, controller, action)}
+        )
 
     @staticmethod
     def put(path: str, resource: str):
@@ -39,7 +43,9 @@ class Router:
     @staticmethod
     def delete(path: str, resource: str):
         controller, action = resource.split("#")
-        Router.ROUTES.append({controller: Model(["DELETE"], path, controller, action)})
+        Router.ROUTES.append(
+            {controller: Model(["DELETE"], path, controller, action)}
+        )
 
     @staticmethod
     def all(resource: str, only=None):

@@ -27,7 +27,9 @@ class FlaskMVC:
             controller = route[0]
             blueprint = Blueprint(controller, controller)
 
-            obj = import_module(f"{self.path}.controllers.{controller}_controller")
+            obj = import_module(
+                f"{self.path}.controllers.{controller}_controller"
+            )
             view_func = getattr(obj, f"{controller.title()}Controller")
 
             self.hook.register(view_func, blueprint)

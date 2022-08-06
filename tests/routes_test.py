@@ -26,7 +26,9 @@ def _(client=client):
 
 @test("and view registered endpoints", tags=["routes"])
 def _(client=client):
-    endpoints = [route.endpoint for route in client.application.url_map.iter_rules()]
+    endpoints = [
+        route.endpoint for route in client.application.url_map.iter_rules()
+    ]
 
     assert "messages.index" in endpoints
     assert "messages.show" in endpoints
