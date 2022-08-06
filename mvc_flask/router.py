@@ -23,28 +23,28 @@ class Router:
     def get(path: str, resource: str):
         controller, action = resource.split("#")
         Router.ROUTES.append(
-            {controller: Model("GET", path, controller, action)}
+            {controller: Model(["GET"], path, controller, action)}
         )
 
     @staticmethod
     def post(path: str, resource: str):
         controller, action = resource.split("#")
         Router.ROUTES.append(
-            {controller: Model("POST", path, controller, action)}
+            {controller: Model(["POST"], path, controller, action)}
         )
 
     @staticmethod
     def put(path: str, resource: str):
         controller, action = resource.split("#")
         Router.ROUTES.append(
-            {controller: Model("PUT", path, controller, action)}
+            {controller: Model(["PUT", "PATCH"], path, controller, action)},
         )
 
     @staticmethod
     def delete(path: str, resource: str):
         controller, action = resource.split("#")
         Router.ROUTES.append(
-            {controller: Model("DELETE", path, controller, action)}
+            {controller: Model(["DELETE"], path, controller, action)}
         )
 
     @staticmethod

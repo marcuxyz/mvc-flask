@@ -59,7 +59,7 @@ def _(client=test_client):
     assert methods.count("POST") == 2
 
 
-@test("count PUT")
+@test("count PUT and PATCH")
 def _(client=test_client):
     methods = [
         route
@@ -68,6 +68,7 @@ def _(client=test_client):
     ]
 
     assert methods.count("PUT") == 1
+    assert methods.count("PATCH") == 1
 
 
 @test("count DELETE")

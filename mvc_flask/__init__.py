@@ -36,7 +36,7 @@ class FlaskMVC:
                     rule=resource.path,
                     endpoint=resource.action,
                     view_func=getattr(view_func(), resource.action),
-                    methods=[resource.method],
+                    methods=resource.method,
                     defaults=dict(view=render_template, request=request),
                 )
 

@@ -52,6 +52,14 @@ def _(client=test_client):
     assert "updated user: 1" in resp.get_data(as_text=True)
 
 
+@test("PATCH /users/1")
+def _(client=test_client):
+    resp = client.patch(url_for("users.update", id=1))
+
+    assert resp.status_code == 200
+    assert "updated user: 1" in resp.get_data(as_text=True)
+
+
 @test("DELETE /users/1")
 def _(client=test_client):
     resp = client.delete(url_for("users.delete", id=1))
