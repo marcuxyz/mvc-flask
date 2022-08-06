@@ -2,81 +2,53 @@ from collections import Counter
 
 from ward import test
 
-from tests.fixtures import test_client
+from tests.fixtures import client
 
 
-@test("confirm if blueprints was registered")
-def _(client=test_client):
-    assert "home" in client.application.blueprints
+@test("confirm if messages blueprint was registered", tags=["routes"])
+def _(client=client):
+    assert "messages" in client.application.blueprints
 
 
-@test("verify if exists duplicate blueprints")
-def _(client=test_client):
+@test("verify if exists duplicate blueprints registered", tags=["routes"])
+def _(client=client):
     assert Counter(client.application.blueprints.keys()) == {
-        "home": 1,
         "messages": 1,
-        "users": 1,
     }
 
 
-@test("view path")
-def _(client=test_client):
+@test("and view registered path", tags=["routes"])
+def _(client=client):
     routes = [route.rule for route in client.application.url_map.iter_rules()]
 
-    assert "/" in routes
-    assert "/hello" in routes
+    assert "/messages" in routes
 
 
-@test("view endpoints")
-def _(client=test_client):
+@test("and view registered endpoints", tags=["routes"])
+def _(client=client):
     endpoints = [
         route.endpoint for route in client.application.url_map.iter_rules()
     ]
 
-    assert "home.index" in endpoints
-    assert "home.hello" in endpoints
+    assert "messages.index" in endpoints
+    assert "messages.show" in endpoints
+    assert "messages.new" in endpoints
+    assert "messages.create" in endpoints
+    assert "messages.edit" in endpoints
+    assert "messages.update" in endpoints
+    assert "messages.delete" in endpoints
 
 
-@test("count GET")
-def _(client=test_client):
+@test("and count verbs registered for HTTP", tags=["routes"])
+def _(client=client):
     methods = [
         route
         for routes in client.application.url_map.iter_rules()
         for route in routes.methods
     ]
 
-    assert methods.count("GET") == 10
-
-
-@test("count POST")
-def _(client=test_client):
-    methods = [
-        route
-        for routes in client.application.url_map.iter_rules()
-        for route in routes.methods
-    ]
-
-    assert methods.count("POST") == 2
-
-
-@test("count PUT and PATCH")
-def _(client=test_client):
-    methods = [
-        route
-        for routes in client.application.url_map.iter_rules()
-        for route in routes.methods
-    ]
-
+    assert methods.count("GET") == 5
+    assert methods.count("POST") == 1
     assert methods.count("PUT") == 1
     assert methods.count("PATCH") == 1
-
-
-@test("count DELETE")
-def _(client=test_client):
-    methods = [
-        route
-        for routes in client.application.url_map.iter_rules()
-        for route in routes.methods
-    ]
-
     assert methods.count("DELETE") == 1

@@ -1,21 +1,21 @@
 class MessagesController:
     def index(self, view, request):
-        return view("messages/index.html")
+        return {}, 200
 
     def show(self, view, request, id):
-        return f"message {id}"
+        return {}, 200
 
     def new(self, view, request):
-        return "form"
+        return {}, 200
 
     def create(self, view, request):
-        return "message created", 201
+        return {}, 201
 
     def edit(self, view, request, id):
-        return f"form"
+        return {}, 200
 
     def update(self, view, request, id):
-        return f"updated messages: {id}"
+        return {}, 202
 
     def delete(self, view, request, id):
-        return f"delete message: {id}"
+        return {}, 202
