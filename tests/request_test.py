@@ -32,7 +32,7 @@ def _(client=client):
     assert resp.status_code == 201
 
 
-@test("should return status 200 for GET (/messages/edit/1)", tags=["request"])
+@test("should return status 200 for GET (/messages/1/edit)", tags=["request"])
 def _(client=client):
     resp = client.get(url_for("messages.edit", id=1))
 
