@@ -7,12 +7,13 @@ from .router import Router
 
 
 class FlaskMVC:
-    def __init__(self, app: Flask = None):
+    def __init__(self, app: Flask = None, path="app"):
         if app is not None:
-            self.init_app(app)
+            self.init_app(app, path)
 
-    def init_app(self, app):
+    def init_app(self, app: Flask = None, path="app"):
         self.hook = Hook()
+        self.path = path
 
         app.template_folder = "views"
 
@@ -20,13 +21,15 @@ class FlaskMVC:
 
     def register_blueprint(self, app: Flask):
         # load routes defined from users
-        import_module(f"app.routes")
+        import_module(f"{self.path}.routes")
 
         for route in Router._method_route().items():
             controller = route[0]
             blueprint = Blueprint(controller, controller)
 
-            obj = import_module(f"app.controllers.{controller}_controller")
+            obj = import_module(
+                f"{self.path}.controllers.{controller}_controller"
+            )
             view_func = getattr(obj, f"{controller.title()}Controller")
 
             self.hook.register(view_func, blueprint)
@@ -37,7 +40,6 @@ class FlaskMVC:
                     endpoint=resource.action,
                     view_func=getattr(view_func(), resource.action),
                     methods=resource.method,
-                    defaults=dict(view=render_template, request=request),
                 )
 
             app.register_blueprint(blueprint)

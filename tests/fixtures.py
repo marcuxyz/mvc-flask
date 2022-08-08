@@ -1,9 +1,9 @@
-from app import create_app
+from tests.app import create_app
 from ward import fixture
 
 
 @fixture
-def test_client():
+def client():
     app = create_app()
     app.testing = True
     app_contenxt = app.test_request_context()
