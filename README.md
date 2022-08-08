@@ -36,6 +36,17 @@ def create_app():
 ```
 
 **By default the `mvc_flask` assumes that your application directory will be `app` and if it doesn't exist, create it!**
+**If you can use other directory, you can use the `path` paramenter when the instance of FlaskMVC is initialized. E.g:**
+
+```python
+mvc = FlaskMVC()
+
+def create_app():
+  ...
+  mvc.init_app(app, path='src')
+```
+
+Now, you can use `src` as default directory for prepare your application.
 
 You structure should be look like this: 
 
@@ -67,19 +78,19 @@ The `controller` can be created in `app/controllers` and action is method of `co
 You can use `Router.all()` to register all routes of `CRUD`.
 
 ```python
-Router.all("users")
+Router.all("messages")
 ```
 
 The previous command produce this:
 
 ```shell
-users.create     POST     /users
-users.delete     DELETE   /users/<id>
-users.edit       GET      /users/<id>/edit
-users.index      GET      /users
-users.new        GET      /users/new
-users.show       GET      /users/<id>
-users.update     PUT      /users/<id>
+messages.create  POST        /messages
+messages.delete  DELETE      /messages/<id>
+messages.edit    GET         /messages/<id>/edit
+messages.index   GET         /messages
+messages.new     GET         /messages/new
+messages.show    GET         /messages/<id>
+messages.update  PATCH, PUT  /messages/<id>
 ```
 
 You can also use `only parameter` to controll routes, e.g:
@@ -91,10 +102,10 @@ Router.all("messages", only="index show new create")
 The previous command produce this:
 
 ```shell
-messages.create  POST     /messages
 messages.index   GET      /messages
-messages.new     GET      /messages/new
 messages.show    GET      /messages/<id>
+messages.new     GET      /messages/new
+messages.create  POST     /messages
 ```
 
 The paramenter `only` accept `string` or `array`, so, you can use `only=["index", "show", "new", "create"]`
@@ -105,11 +116,11 @@ Now that configure routes, the `home_controller.py` file must contain the `HomeC
 
 ```python
 class HomeController:
-    def index(self, view, request):
+    def index(self):
         return view("index.html")
 ```
 
-If you have question, please, check de [app](https://github.com/marcuxyz/mvc_flask/tree/main/app) directory to more details.
+If you have question, please, check de [app](https://github.com/marcuxyz/mvc-flask/tree/main/tests/app) directory to more details.
 
 To use the hooks as `before_request`, `after_request` and etc... Just describe it in the controller, see:
 
@@ -117,7 +128,7 @@ To use the hooks as `before_request`, `after_request` and etc... Just describe i
 class HomeController:
     before_request = ["hi"]
 
-    def index(self, view, request):
+    def index(self):
         return "home"
 
     def hi(self):
@@ -129,11 +140,3 @@ The previous example describes the `hi(self)` will be called every times that th
 ## Views
 
 Flask use the `templates` directory by default to store `HTMLs` files. However, using the `mvc-flask` the default becomes `views`. You can use the `app/views` directory to stores templates.
-
-# Tests
-
-You can run the tests, executing the follow command:
-
-```shell
-$ make test
-```
