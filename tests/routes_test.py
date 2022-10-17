@@ -13,7 +13,10 @@ def _(client=client, resource=each("messages", "health", "user", "posts")):
 @test("verify if exists duplicate blueprints registered", tags=["routes"])
 def _(client=client):
     assert Counter(client.application.blueprints.keys()) == {
-        "messages": 1, "health": 1, "user": 1, "posts": 1
+        "messages": 1,
+        "health": 1,
+        "user": 1,
+        "posts": 1,
     }
 
 
@@ -32,7 +35,6 @@ def _(
         "/api/v1/user/new",
         "/api/v1/user/<id>",
         "/api/v1/user/<id>/edit",
-
     ),
 ):
     routes = [route.rule for route in client.application.url_map.iter_rules()]

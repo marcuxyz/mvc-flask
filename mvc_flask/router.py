@@ -54,7 +54,7 @@ class Router:
         )
 
     @staticmethod
-    def all(resource: str, only=None, base_path=''):
+    def all(resource: str, only=None, base_path=""):
         group = [
             "index",
             "show",

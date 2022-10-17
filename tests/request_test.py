@@ -46,9 +46,7 @@ def _(client=client, resource=each("messages", "user", "posts")):
     assert resp.status_code == 202
 
 
-@test(
-    "should return status 200 for GET (DELETE)", tags=["request"]
-)
+@test("should return status 200 for GET (DELETE)", tags=["request"])
 def _(client=client, resource=each("messages", "user", "posts")):
     resp = client.delete(url_for("messages.delete", id=1))
 
