@@ -110,6 +110,44 @@ messages.create  POST     /messages
 
 The paramenter `only` accept `string` or `array`, so, you can use `only=["index", "show", "new", "create"]`
 
+## Namespace
+In `app/routes.py`, you can start register namespace, e.g:
+
+```python
+from mvc_flask import Router
+
+api = Router.namespace("/api/v1")
+
+api.get("/health", "health#index")
+
+api.all("user")
+
+posts = api.namespace("/posts")
+posts.get("", "posts#index")
+posts.post("", "posts#create")
+posts.get("/<id>", "posts#show")
+posts.put("/<id>", "posts#update")
+posts.get("/<id>", "posts#delete")
+
+```
+
+The source produce this:
+```shell
+health.index     GET         /api/v1/health
+posts.create     POST        /api/v1/posts
+posts.delete     GET         /api/v1/posts/<id>
+posts.index      GET         /api/v1/posts
+posts.show       GET         /api/v1/posts/<id>
+posts.update     PATCH, PUT  /api/v1/posts/<id>
+user.create      POST        /api/v1/user
+user.delete      DELETE      /api/v1/user/<id>
+user.edit        GET         /api/v1/user/<id>/edit
+user.index       GET         /api/v1/user
+user.new         GET         /api/v1/user/new
+user.show        GET         /api/v1/user/<id>
+user.update      PATCH, PUT  /api/v1/user/<id>
+```
+
 ## Controller
 
 Now that configure routes, the `home_controller.py` file must contain the `HomeController` class, registering the `action`, e.g:  

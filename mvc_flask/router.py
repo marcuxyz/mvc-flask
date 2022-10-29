@@ -1,5 +1,7 @@
 from collections import namedtuple
 
+from .namespace import Namespace
+
 Model = namedtuple("Model", "method path controller action")
 
 
@@ -18,6 +20,10 @@ class Router:
                 else:
                     routes[key].append(value)
         return routes
+
+    @staticmethod
+    def namespace(name: str):
+        return Namespace(name, Router)
 
     @staticmethod
     def get(path: str, resource: str):
@@ -48,7 +54,7 @@ class Router:
         )
 
     @staticmethod
-    def all(resource: str, only=None):
+    def all(resource: str, only=None, base_path=""):
         group = [
             "index",
             "show",
@@ -59,10 +65,10 @@ class Router:
             "delete",
         ]
         actions = only.split() if isinstance(only, str) else only
-        Router._add_routes(resource, actions if actions else group)
+        Router._add_routes(resource, actions if actions else group, base_path)
 
     @staticmethod
-    def _add_routes(name, actions):
+    def _add_routes(name, actions, base_path):
         groups = {
             "index": "get",
             "new": "get",
@@ -83,7 +89,7 @@ class Router:
         }
 
         for action in actions:
-            path = f"/{name}{urls[action]}" if action in urls else f"/{name}"
+            path = f"{base_path}/{name}{urls.get(action, '')}"
 
             if action in parameters:
                 getattr(Router, parameters[action])(path, f"{name}#{action}")
