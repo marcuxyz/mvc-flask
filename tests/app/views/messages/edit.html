@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="{{ url_for('messages.update', id=1) }}" method="put">
+  <textarea name="message" id="message" cols="30" rows="10"></textarea>
+  <input type="submit" value="send">
+</form>
+
+{% endblock content %}

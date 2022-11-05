@@ -9,7 +9,7 @@ class PostsController:
         return {}, 200
 
     def update(self, id):
-        return {}, 202
+        return {}, 200
 
     def delete(self, id):
-        return {}, 202
+        return {}, 200
