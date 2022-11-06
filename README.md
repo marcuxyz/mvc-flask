@@ -153,9 +153,11 @@ user.update      PATCH, PUT  /api/v1/user/<id>
 Now that configure routes, the `home_controller.py` file must contain the `HomeController` class, registering the `action`, e.g:  
 
 ```python
+from flask import render_template
+
 class HomeController:
     def index(self):
-        return view("index.html")
+        return render_template("index.html")
 ```
 
 If you have question, please, check de [app](https://github.com/marcuxyz/mvc-flask/tree/main/tests/app) directory to more details.
