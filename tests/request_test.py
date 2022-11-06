@@ -1,7 +1,8 @@
 from flask import url_for
 from ward import each, test
 
-from tests.fixtures import client
+from tests.fixtures import client, browser
+from tests.app.db.storage import data
 
 
 @test("should return status 200 for GET (INDEX)", tags=["request"])
@@ -32,22 +33,29 @@ def _(client=client, resource=each("messages", "user", "posts")):
     assert resp.status_code == 201
 
 
-@test("should return status 200 for GET (EDIT)", tags=["request"])
-def _(client=client, resource=each("messages", "user")):
-    resp = client.get(url_for(f"{resource}.edit", id=1))
+@test("must update data from form", tags=["request"])
+def _(browser=browser):
+    browser.visit(url_for("messages.edit", id=1))
+    browser.fill("message", "the message of flask mvc")
+    browser.find_by_value("send").click()
 
-    assert resp.status_code == 200
-
-
-@test("should return status 200 for GET (UPDATE)", tags=["request"])
-def _(client=client, resource=each("messages", "user", "posts")):
-    resp = client.put(url_for(f"{resource}.update", id=1))
-
-    assert resp.status_code == 202
+    assert browser.url == "http://localhost/messages"
+    assert browser.is_text_present("Hello, FLASK MVC")
 
 
-@test("should return status 200 for GET (DELETE)", tags=["request"])
-def _(client=client, resource=each("messages", "user", "posts")):
-    resp = client.delete(url_for("messages.delete", id=1))
+@test("must delete data from form", tags=["request"])
+def _(browser=browser):
+    browser.visit(url_for("messages.show", id=1))
 
-    assert resp.status_code == 202
+    assert len(data) == 3
+    assert 1 in data
+    assert 2 in data
+    assert 3 in data
+
+    browser.find_by_value("delete").click()
+
+    assert browser.url == "http://localhost/messages"
+    assert len(data) == 2
+    assert 1 in data
+    assert 2 in data
+    assert 3 not in data

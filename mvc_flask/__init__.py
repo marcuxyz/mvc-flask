@@ -2,6 +2,7 @@ from importlib import import_module
 
 from flask import Flask, render_template, request
 from flask.blueprints import Blueprint
+from mvc_flask import plugins
 
 from .router import Router
 
@@ -18,6 +19,7 @@ class FlaskMVC:
         app.template_folder = "views"
 
         self.register_blueprint(app)
+        plugins.register(app)
 
     def register_blueprint(self, app: Flask):
         # load routes defined from users
