@@ -1,14 +1,14 @@
-from flask import render_template_string, render_template, redirect, url_for
+from flask import render_template, redirect, url_for
+
+from tests.app.db.storage import data
 
 
 class MessagesController:
     def index(self):
-        return render_template_string(
-            "<h1>Hello, {{ name }}", name="FLASK MVC"
-        )
+        return "Hello, FLASK MVC!"
 
     def show(self, id):
-        return {}, 200
+        return render_template("messages/show.html")
 
     def new(self):
         return {}, 200
@@ -23,4 +23,5 @@ class MessagesController:
         return redirect(url_for(".index"))
 
     def delete(self, id):
-        return {}, 200
+        data.pop()
+        return redirect(url_for(".index"))
