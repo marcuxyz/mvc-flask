@@ -177,6 +177,43 @@ class HomeController:
 
 The previous example describes the `hi(self)` will be called every times that the visitors access the controller.
 
+## PUT / DELETE
+
+we know that the HTML form doesn't send payload to `action` with `put` or `delete` method as attribute of `form tag`. But,
+the `FLASK MVC` does the work for you, everything you need is add the `{{ mvc_form }} tag in HTML template. Look:
+
+
+```python
+# app/controllers/messages_controller.py
+
+from flask import render_template, redirect, url_for, flash
+
+class MessagesController:
+    def edit(self, id):
+        return render_template("messages/edit.html")
+
+    def update(self, id):
+        flash('Message sent successfully!')
+        return redirect(url_for(".edit"))
+```
+
+
+```html
+<!--  app/views/messages/edit.html -->
+
+{% block content %}
+
+  <form action='{{ url_for("messages.update", id=1) }}' method="put">
+    <textarea name="message"></textarea>
+    <input type="submit" value="update" />
+  </form>
+
+  {{ mvc_form }}
+
+{% endblock %}
+
+```
+
 ## Views
 
 Flask use the `templates` directory by default to store `HTMLs` files. However, using the `mvc-flask` the default becomes `views`. You can use the `app/views` directory to stores templates.
