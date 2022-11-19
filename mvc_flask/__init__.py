@@ -16,7 +16,8 @@ class FlaskMVC:
         self.hook = Hook()
         self.path = path
 
-        app.template_folder = "views"
+        if app.template_folder is not None:
+            app.template_folder = "views"
 
         self.register_blueprint(app)
         plugins.register(app)
