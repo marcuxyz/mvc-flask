@@ -1,10 +1,11 @@
 from importlib import import_module
 
-from flask import Flask, render_template, request
+from flask import Flask
 from flask.blueprints import Blueprint
 from mvc_flask import plugins
 
 from .router import Router
+from .       import cli
 
 
 class FlaskMVC:
@@ -20,6 +21,7 @@ class FlaskMVC:
 
         self.register_blueprint(app)
         plugins.register(app)
+        cli.init_app(app)
 
     def register_blueprint(self, app: Flask):
         # load routes defined from users
