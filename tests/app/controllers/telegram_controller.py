@@ -1,0 +1,3 @@
+class TelegramController:
+    def index():
+        ...

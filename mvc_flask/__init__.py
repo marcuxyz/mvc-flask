@@ -5,7 +5,7 @@ from flask.blueprints import Blueprint
 from mvc_flask import plugins
 
 from .router import Router
-from .       import cli
+from . import cli
 
 
 class FlaskMVC:
