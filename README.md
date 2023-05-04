@@ -220,4 +220,6 @@ Flask use the `templates` directory by default to store `HTMLs` files. However, 
 
 ## Result
 
+Adding result session to show image that is represented by project build with library.
+
 <img width="2560" alt="Captura de Tela 2023-04-05 às 23 23 12" src="https://user-images.githubusercontent.com/9499562/230256574-5c33ef3a-a584-4878-bc59-b174be4a2a65.png">
