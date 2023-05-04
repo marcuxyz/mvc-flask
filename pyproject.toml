@@ -17,7 +17,7 @@ python = ">=3.8.0,<4.0.0"
 Flask = "^2.3"
 
 [tool.poetry.dev-dependencies]
-black = "^21.8b0"
+black = "^23.3.0"
 ward = "^0.65.0-beta.0"
 splinter = {version = "^0.18.1", extras = ["flask"]}
 urllib3 = "^1.26.12"
