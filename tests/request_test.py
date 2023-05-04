@@ -39,7 +39,7 @@ def _(browser=browser):
     browser.fill("message", "the message of flask mvc")
     browser.find_by_value("send").click()
 
-    assert browser.url == "http://localhost/messages"
+    assert browser.url == "/messages"
     assert browser.is_text_present("Hello, FLASK MVC")
 
 
@@ -54,7 +54,7 @@ def _(browser=browser):
 
     browser.find_by_value("delete").click()
 
-    assert browser.url == "http://localhost/messages"
+    assert browser.url == "/messages"
     assert len(data) == 2
     assert 1 in data
     assert 2 in data
