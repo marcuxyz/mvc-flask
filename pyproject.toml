@@ -13,8 +13,8 @@ homepage = "https://github.com/marcuxyz/mvc_flask"
 
 
 [tool.poetry.dependencies]
-python = ">=3.6.2,<4.0.0"
-Flask = "^2.0.1"
+python = ">=3.8.0,<4.0.0"
+Flask = "^2.3"
 
 [tool.poetry.dev-dependencies]
 black = "^21.8b0"
