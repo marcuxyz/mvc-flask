@@ -1,8 +1,11 @@
+import json
+
 from flask import url_for
 from ward import each, test
 
+from tests.app.models.message import Message
 from tests.fixtures import client, browser
-from tests.app.db.storage import data
+from tests.app import db
 
 
 @test("should return status 200 for GET (INDEX)", tags=["request"])
@@ -26,36 +29,66 @@ def _(client=client):
     assert resp.status_code == 200
 
 
-@test("should return status 201 for POST (CREATE)", tags=["request"])
-def _(client=client, resource=each("messages", "user", "posts")):
+@test(
+    "should return status 201 for POST (CREATE)",
+    tags=["request", "create", "user", "posts"],
+)
+def _(client=client, resource=each("user", "posts")):
+    message = Message(title="Message One")
+    db.session.add(message)
+    db.session.commit()
+
     resp = client.post(url_for(f"{resource}.create"))
 
     assert resp.status_code == 201
 
 
-@test("must update data from form", tags=["request"])
+@test(
+    "should create a message sending json",
+    tags=["request", "messages", "create", "json"],
+)
+def _(client=client):
+    message = Message(title="Message One")
+    db.session.add(message)
+    db.session.commit()
+
+    data = {"title": "hello, andrews"}
+    res = client.post(
+        url_for("messages.create"),
+        data=json.dumps(data),
+        headers={"Content-Type": "application/json"},
+    )
+
+    assert res.status_code == 201
+    assert res.json["title"] == "hello, andrews"
+
+
+@test(
+    "should update message from form", tags=["request", "messages", "update"]
+)
 def _(browser=browser):
-    browser.visit(url_for("messages.edit", id=1))
-    browser.fill("message", "the message of flask mvc")
+    message = Message(title="Message One")
+    db.session.add(message)
+    db.session.commit()
+
+    browser.visit(url_for("messages.edit", id=message.id))
+    browser.fill("title", "Message updated")
     browser.find_by_value("send").click()
 
     assert browser.url == "/messages"
-    assert browser.is_text_present("Hello, FLASK MVC")
+    assert browser.is_text_present("Message updated")
 
 
-@test("must delete data from form", tags=["request"])
+@test(
+    "should delete message from form", tags=["request", "messages", "delete"]
+)
 def _(browser=browser):
-    browser.visit(url_for("messages.show", id=1))
+    message = Message(title="Message One")
+    db.session.add(message)
+    db.session.commit()
 
-    assert len(data) == 3
-    assert 1 in data
-    assert 2 in data
-    assert 3 in data
-
+    browser.visit(url_for("messages.show", id=message.id))
     browser.find_by_value("delete").click()
 
     assert browser.url == "/messages"
-    assert len(data) == 2
-    assert 1 in data
-    assert 2 in data
-    assert 3 not in data
+    assert browser.is_text_not_present("Message updated")

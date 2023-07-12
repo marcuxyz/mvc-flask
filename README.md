@@ -2,8 +2,6 @@
 
 You can use the mvc pattern in your flask application using this extension.
 
-This real world implementation `FLASK MVC` example: https://github.com/negrosdev/negros.dev 
-
 ## Installation
 
 Run the follow command to install `mvc_flask`:
@@ -48,7 +46,7 @@ def create_app():
 
 Now, you can use `src` as default directory for prepare your application.
 
-You structure should be look like this: 
+You structure should be look like this:
 
 ```text
 app
@@ -150,7 +148,7 @@ user.update      PATCH, PUT  /api/v1/user/<id>
 
 ## Controller
 
-Now that configure routes, the `home_controller.py` file must contain the `HomeController` class, registering the `action`, e.g:  
+Now that configure routes, the `home_controller.py` file must contain the `HomeController` class, registering the `action`, e.g:
 
 ```python
 from flask import render_template
@@ -177,10 +175,10 @@ class HomeController:
 
 The previous example describes the `hi(self)` will be called every times that the visitors access the controller.
 
-## PUT / DELETE
+## PUT / PATCH / DELETE ...
 
 we know that the HTML form doesn't send payload to `action` with `put` or `delete` method as attribute of `form tag`. But,
-the `FLASK MVC` does the work for you, everything you need is add the `{{ mvc_form }} tag in HTML template. Look:
+the `FLASK MVC` does the work for you, everything you need is add the tag in HTML template. Look:
 
 
 ```python
@@ -198,21 +196,20 @@ class MessagesController:
 ```
 
 
-```html
+```jinja
 <!--  app/views/messages/edit.html -->
 
 {% block content %}
+  <form action="{{ url_for('messages.update', id=1) }}" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="text" name="title" id="title" value="Yeahh!">
 
-  <form action='{{ url_for("messages.update", id=1) }}' method="put">
-    <textarea name="message"></textarea>
-    <input type="submit" value="update" />
+    <input type="submit" value="send">
   </form>
-
-  {{ mvc_form }}
-
 {% endblock %}
-
 ```
+
+The `<input type="hidden" name="_method" value="PUT">` is necessary to work sucessfully!
 
 ## Views
 

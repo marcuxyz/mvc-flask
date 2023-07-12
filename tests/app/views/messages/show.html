@@ -2,7 +2,9 @@
 
 {% block content %}
 
-<form action="{{ url_for('messages.delete', id=1) }}" method="delete">
+<form action="{{ url_for('messages.delete', id=1) }}" method="post">
+  <input type="hidden" name="_method" value="delete">
+
   <input type="submit" value="delete">
 </form>
 

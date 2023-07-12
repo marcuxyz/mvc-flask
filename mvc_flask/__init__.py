@@ -1,10 +1,13 @@
 from importlib import import_module
 
-from flask import Flask, render_template, request
+from flask import Flask
 from flask.blueprints import Blueprint
-from mvc_flask import plugins
 
 from .router import Router
+from .middleware.http_method_override import (
+    HTTPMethodOverrideMiddleware,
+    CustomRequest,
+)
 
 
 class FlaskMVC:
@@ -17,9 +20,10 @@ class FlaskMVC:
         self.path = path
 
         app.template_folder = "views"
+        app.request_class = CustomRequest
+        app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)
 
         self.register_blueprint(app)
-        plugins.register(app)
 
     def register_blueprint(self, app: Flask):
         # load routes defined from users
