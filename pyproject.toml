@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mvc-flask"
-version = "2.5.0"
+version = "2.7.0"
 description = "turn standard Flask into mvc"
 authors = ["Marcus Pereira <marcus@negros.dev>"]
 
