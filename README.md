@@ -180,18 +180,25 @@ The previous example describes the `hi(self)` will be called every times that th
 we know that the HTML form doesn't send payload to `action` with `put` or `delete` method as attribute of `form tag`. But,
 the `FLASK MVC` does the work for you, everything you need is add the tag in HTML template. Look:
 
-
 ```python
 # app/controllers/messages_controller.py
 
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 
 class MessagesController:
     def edit(self, id):
-        return render_template("messages/edit.html")
+        message = Message.query.get(id)
+
+        return render_template("messages/edit.html", message=message)
 
     def update(self, id):
+        message = Message.query.get(id)
+        message.title = request.form.get('title')
+
+        db.session.add(message)
+        db.session.commit()
         flash('Message sent successfully!')
+
         return redirect(url_for(".edit"))
 ```
 
@@ -200,8 +207,8 @@ class MessagesController:
 <!--  app/views/messages/edit.html -->
 
 {% block content %}
-  <form action="{{ url_for('messages.update', id=1) }}" method="POST">
-    <input type="hidden" name="_method" value="PUT">
+  <form action="{{ url_for('messages.update', id=message.id) }}" method="POST">
+    <input type="hidden" name="_method" value="put">
     <input type="text" name="title" id="title" value="Yeahh!">
 
     <input type="submit" value="send">
@@ -209,7 +216,7 @@ class MessagesController:
 {% endblock %}
 ```
 
-The `<input type="hidden" name="_method" value="PUT">` is necessary to work sucessfully!
+The `<input type="hidden" name="_method" value="put">` is necessary to work sucessfully!
 
 ## Views
 
