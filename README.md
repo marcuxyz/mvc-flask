@@ -2,8 +2,6 @@
 
 You can use the mvc pattern in your flask application using this extension.
 
-This real world implementation `FLASK MVC` example: https://github.com/negrosdev/negros.dev 
-
 ## Installation
 
 Run the follow command to install `mvc_flask`:
@@ -48,7 +46,7 @@ def create_app():
 
 Now, you can use `src` as default directory for prepare your application.
 
-You structure should be look like this: 
+You structure should be look like this:
 
 ```text
 app
@@ -150,7 +148,7 @@ user.update      PATCH, PUT  /api/v1/user/<id>
 
 ## Controller
 
-Now that configure routes, the `home_controller.py` file must contain the `HomeController` class, registering the `action`, e.g:  
+Now that configure routes, the `home_controller.py` file must contain the `HomeController` class, registering the `action`, e.g:
 
 ```python
 from flask import render_template
@@ -177,42 +175,48 @@ class HomeController:
 
 The previous example describes the `hi(self)` will be called every times that the visitors access the controller.
 
-## PUT / DELETE
+## PUT / PATCH / DELETE ...
 
 we know that the HTML form doesn't send payload to `action` with `put` or `delete` method as attribute of `form tag`. But,
-the `FLASK MVC` does the work for you, everything you need is add the `{{ mvc_form }} tag in HTML template. Look:
-
+the `FLASK MVC` does the work for you, everything you need is add the tag in HTML template. Look:
 
 ```python
 # app/controllers/messages_controller.py
 
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 
 class MessagesController:
     def edit(self, id):
-        return render_template("messages/edit.html")
+        message = Message.query.get(id)
+
+        return render_template("messages/edit.html", message=message)
 
     def update(self, id):
+        message = Message.query.get(id)
+        message.title = request.form.get('title')
+
+        db.session.add(message)
+        db.session.commit()
         flash('Message sent successfully!')
+
         return redirect(url_for(".edit"))
 ```
 
 
-```html
+```jinja
 <!--  app/views/messages/edit.html -->
 
 {% block content %}
+  <form action="{{ url_for('messages.update', id=message.id) }}" method="POST">
+    <input type="hidden" name="_method" value="put">
+    <input type="text" name="title" id="title" value="Yeahh!">
 
-  <form action='{{ url_for("messages.update", id=1) }}' method="put">
-    <textarea name="message"></textarea>
-    <input type="submit" value="update" />
+    <input type="submit" value="send">
   </form>
-
-  {{ mvc_form }}
-
 {% endblock %}
-
 ```
+
+The `<input type="hidden" name="_method" value="put">` is necessary to work sucessfully!
 
 ## Views
 

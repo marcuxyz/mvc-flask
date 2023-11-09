@@ -2,9 +2,13 @@
 
 {% block content %}
 
-<form action="{{ url_for('messages.update', id=1) }}" method="put">
-  <textarea name="message" id="message" cols="30" rows="10"></textarea>
+<form action="{{ url_for('messages.update', id=1) }}" method="POST">
+  <input type="hidden" name="_method" value="put">
+
+  <input type="text" name="title" id="title">
+
   <input type="submit" value="send">
 </form>
+
 
 {% endblock content %}

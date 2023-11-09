@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mvc-flask"
-version = "2.5.0"
+version = "2.7.0"
 description = "turn standard Flask into mvc"
 authors = ["Marcus Pereira <marcus@negros.dev>"]
 
@@ -21,6 +21,9 @@ black = "^23.3.0"
 ward = "^0.65.0-beta.0"
 splinter = {version = "^0.18.1", extras = ["flask"]}
 urllib3 = "^1.26.18"
+
+[tool.poetry.group.dev.dependencies]
+flask-sqlalchemy = "^3.0.5"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
