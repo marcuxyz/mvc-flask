@@ -1,0 +1,24 @@
+site_name: FLASK MVC
+theme:
+  name: material
+  features:
+      - navigation.sections
+nav:
+    - Introduction: 'index.md'
+    - Usage:
+        - QuickStart: 'quickstart.md'
+    - Configuration:
+        - Router: 'router.md'
+        - Controllers: 'controllers.md'
+        - Views: 'views.md'
+    - Forms:
+      - Usage: 'usage.md'
+
+
+repo_name: marcuxyz/mvc_flask
+repo_url: https://github.com/marcuxyz/mvc_flask/
+edit_uri: ""
+
+markdown_extensions:
+  - codehilite:
+      css_class: highlight
