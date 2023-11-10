@@ -15,6 +15,7 @@ homepage = "https://github.com/marcuxyz/mvc_flask"
 [tool.poetry.dependencies]
 python = ">=3.8.0,<4.0.0"
 Flask = "^2.3"
+mkdocs-material = "^9.4.8"
 
 [tool.poetry.dev-dependencies]
 black = "^23.3.0"
