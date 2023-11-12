@@ -15,6 +15,7 @@ def test_when_not_exists_registered_blueprints(client):
         "posts": 1,
     }
 
+
 def test_when_messages_routes_have_been_registered(client):
     endpoints = ["/messages", "/messages/new", "/messages/<id>", "/messages/<id>/edit"]
     routes = [route.rule for route in client.application.url_map.iter_rules()]
