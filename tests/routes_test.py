@@ -1,72 +1,75 @@
+from unittest import TestCase
 from collections import Counter
 
-from ward import each, test
-
-from tests.fixtures import client
+from tests.app import create_app
 
 
-@test("confirm if blueprints was registered", tags=["routes"])
-def _(client=client, resource=each("messages", "health", "user", "posts")):
-    assert resource in client.application.blueprints
+class TestStringMethods(TestCase):
+    def setUp(self) -> None:
+        app = create_app()
+        app.testing = True
+        self.client = app.test_client()
 
+    @property
+    def endpoints(self):
+        return [
+            route.endpoint
+            for route in self.client.application.url_map.iter_rules()
+        ]
 
-@test("verify if exists duplicate blueprints registered", tags=["routes"])
-def _(client=client):
-    assert Counter(client.application.blueprints.keys()) == {
-        "messages": 1,
-        "health": 1,
-        "user": 1,
-        "posts": 1,
-    }
+    def test_when_blueprints_have_been_registered(self):
+        for resource in ["messages", "health", "user", "posts"]:
+            self.assertIn(resource, self.client.application.blueprints)
 
+    def test_when_not_exists_registered_blueprints(self):
+        resources = self.client.application.blueprints.keys()
 
-@test("and view registered path", tags=["routes"])
-def _(
-    client=client,
-    endpoint=each(
-        "/messages",
-        "/messages/new",
-        "/messages/<id>",
-        "/messages/<id>/edit",
-        "/api/v1/health",
-        "/api/v1/posts",
-        "/api/v1/posts/<id>",
-        "/api/v1/user",
-        "/api/v1/user/new",
-        "/api/v1/user/<id>",
-        "/api/v1/user/<id>/edit",
-    ),
-):
-    routes = [route.rule for route in client.application.url_map.iter_rules()]
+        self.assertEqual(
+            Counter(resources),
+            {"messages": 1, "health": 1, "user": 1, "posts": 1},
+        )
 
-    assert endpoint in routes
+    def test_when_routes_have_been_registered(self):
+        endpoints = [
+            "/messages",
+            "/messages/new",
+            "/messages/<id>",
+            "/messages/<id>/edit",
+            "/api/v1/health",
+            "/api/v1/posts",
+            "/api/v1/posts/<id>",
+            "/api/v1/user",
+            "/api/v1/user/new",
+            "/api/v1/user/<id>",
+            "/api/v1/user/<id>/edit",
+        ]
+        routes = [
+            route.rule
+            for route in self.client.application.url_map.iter_rules()
+        ]
 
+        for endpoint in endpoints:
+            self.assertIn(endpoint, routes)
 
-@test("and view registered endpoints", tags=["routes"])
-def _(client=client, resource=each("messages", "user")):
-    endpoints = [
-        route.endpoint for route in client.application.url_map.iter_rules()
-    ]
+    def test_when_endpoints_have_been_registered(self):
+        for resource in ["messages", "user"]:
+            self.assertIn(f"{resource}.index", self.endpoints)
+            self.assertIn(f"{resource}.show", self.endpoints)
+            self.assertIn(f"{resource}.new", self.endpoints)
+            self.assertIn(f"{resource}.create", self.endpoints)
+            self.assertIn(f"{resource}.edit", self.endpoints)
+            self.assertIn(f"{resource}.update", self.endpoints)
+            self.assertIn(f"{resource}.delete", self.endpoints)
 
-    assert f"{resource}.index" in endpoints
-    assert f"{resource}.show" in endpoints
-    assert f"{resource}.new" in endpoints
-    assert f"{resource}.create" in endpoints
-    assert f"{resource}.edit" in endpoints
-    assert f"{resource}.update" in endpoints
-    assert f"{resource}.delete" in endpoints
+    def test_when_when_there_are_many_registered_routes(self):
+        methods = [
+            route
+            for routes in self.client.application.url_map.iter_rules()
+            for route in routes.methods
+        ]
 
-
-@test("and count verbs registered for HTTP", tags=["routes"])
-def _(client=client):
-    methods = [
-        route
-        for routes in client.application.url_map.iter_rules()
-        for route in routes.methods
-    ]
-
-    assert methods.count("GET") == 13
-    assert methods.count("POST") == 3
-    assert methods.count("PUT") == 3
-    assert methods.count("PATCH") == 3
-    assert methods.count("DELETE") == 2
+        self.assertEqual(methods.count("GET"), 13)
+        self.assertEqual(methods.count("POST"), 3)
+        self.assertEqual(methods.count("PUT"), 3)
+        self.assertEqual(methods.count("PATCH"), 3)
+        self.assertEqual(methods.count("DELETE"), 2)

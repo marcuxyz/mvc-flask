@@ -3,3 +3,7 @@ __pycache__
 .vscode
 .env
 dist
+
+# Ignore configuration of database
+migrations
+instance
