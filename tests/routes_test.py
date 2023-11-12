@@ -10,22 +10,14 @@ class TestStringMethods(TestCase):
         app.testing = True
         self.client = app.test_client()
 
-    @property
-    def endpoints(self):
-        return [
-            route.endpoint
-            for route in self.client.application.url_map.iter_rules()
-        ]
-
     def test_when_blueprints_have_been_registered(self):
-        for resource in ["messages", "health", "user", "posts"]:
-            self.assertIn(resource, self.client.application.blueprints)
+        expected_blueprints = {"messages", "health", "user", "posts"}
+
+        self.assertEqual(set(self.blueprints), expected_blueprints)
 
     def test_when_not_exists_registered_blueprints(self):
-        resources = self.client.application.blueprints.keys()
-
         self.assertEqual(
-            Counter(resources),
+            Counter(self.blueprints.keys()),
             {"messages": 1, "health": 1, "user": 1, "posts": 1},
         )
 
@@ -43,10 +35,7 @@ class TestStringMethods(TestCase):
             "/api/v1/user/<id>",
             "/api/v1/user/<id>/edit",
         ]
-        routes = [
-            route.rule
-            for route in self.client.application.url_map.iter_rules()
-        ]
+        routes = [route.rule for route in self.client.application.url_map.iter_rules()]
 
         for endpoint in endpoints:
             self.assertIn(endpoint, routes)
@@ -73,3 +62,11 @@ class TestStringMethods(TestCase):
         self.assertEqual(methods.count("PUT"), 3)
         self.assertEqual(methods.count("PATCH"), 3)
         self.assertEqual(methods.count("DELETE"), 2)
+
+    @property
+    def endpoints(self):
+        return [url.endpoint for url in self.client.application.url_map.iter_rules()]
+
+    @property
+    def blueprints(self):
+        return self.client.application.blueprints
