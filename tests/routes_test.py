@@ -4,14 +4,13 @@ from tests.app import create_app
 
 
 def test_when_blueprints_have_been_registered(client):
-    assert set(client.application.blueprints) == {"messages", "health", "user", "posts"}
+    assert set(client.application.blueprints) == {"messages", "health", "posts"}
 
 
 def test_when_not_exists_registered_blueprints(client):
     assert Counter(client.application.blueprints.keys()) == {
         "messages": 1,
         "health": 1,
-        "user": 1,
         "posts": 1,
     }
 

@@ -26,12 +26,14 @@ def client():
         db.drop_all()
 
 
-# @pytest.fixture
-# def browser(app_context=app_context):
-#     with app_context.test_client():
-#         db.create_all()
+@pytest.fixture
+def browser():
+    app = test_client()
 
-#         yield Browser("flask", app=app_context)
+    with app.test_client():
+        db.create_all()
 
-#         db.session.remove()
-#         db.drop_all()
+        yield Browser("flask", app=app)
+
+        db.session.remove()
+        db.drop_all()

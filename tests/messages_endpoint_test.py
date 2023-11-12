@@ -1,11 +1,4 @@
-import json
 from collections import Counter
-
-from flask import url_for
-
-from tests.app.models.message import Message
-from tests.app import db
-
 
 def test_when_blueprints_have_been_registered(client):
     assert "messages" in client.application.blueprints

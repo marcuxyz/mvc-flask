@@ -6,8 +6,6 @@ api = Router.namespace("/api/v1")
 
 api.get("/health", "health#index")
 
-api.all("user")
-
 posts = api.namespace("/posts")
 posts.get("", "posts#index")
 posts.post("", "posts#create")
