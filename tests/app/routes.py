@@ -1,6 +1,6 @@
 from mvc_flask import Router
 
-Router.all("messages", only="index show new create edit update delete")
+Router.all("messages")
 
 api = Router.namespace("/api/v1")
 
