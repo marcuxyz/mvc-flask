@@ -29,11 +29,19 @@ class MessagesController:
 
     def update(self, id):
         message = Message.query.get(id)
-        message.title = request.form.get("title")
-        db.session.add(message)
-        db.session.commit()
 
-        return redirect(url_for(".index"))
+        if request.headers["Content-Type"] == "application/json":
+            message.title = request.json["title"]
+            db.session.add(message)
+            db.session.commit()
+
+            return {"title": message.title}
+        else:
+            message.title = request.form.get("title")
+            db.session.add(message)
+            db.session.commit()
+
+            return render_template("messages/show.html", message=message)
 
     def delete(self, id):
         message = Message.query.get(id)
