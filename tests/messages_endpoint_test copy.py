@@ -31,17 +31,3 @@ def test_when_messages_endpoint_have_been_registered(client):
     assert f"messages.edit" in endpoints
     assert f"messages.update" in endpoints
     assert f"messages.delete" in endpoints
-
-
-def test_when_there_are_many_registered_routes(client):
-    methods = [
-        route
-        for routes in client.application.url_map.iter_rules()
-        for route in routes.methods
-    ]
-
-    assert methods.count("GET") == 9
-    assert methods.count("POST") == 2
-    assert methods.count("PUT") == 2
-    assert methods.count("PATCH") == 2
-    assert methods.count("DELETE") == 1

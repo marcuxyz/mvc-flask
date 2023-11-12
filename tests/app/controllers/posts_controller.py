@@ -2,10 +2,16 @@ class PostsController:
     def index(self):
         return {}, 200
 
+    def show(self, id):
+        return {}, 200
+
+    def new(self):
+        return {}, 200
+
     def create(self):
         return {}, 201
 
-    def show(self, id):
+    def edit(self, id):
         return {}, 200
 
     def update(self, id):
