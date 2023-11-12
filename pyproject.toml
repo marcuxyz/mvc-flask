@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mvc-flask"
-version = "2.7.1"
+version = "2.7.2"
 description = "turn standard Flask into mvc"
 authors = ["Marcus Pereira <marcus@negros.dev>"]
 
@@ -14,7 +14,7 @@ homepage = "https://github.com/marcuxyz/mvc_flask"
 
 [tool.poetry.dependencies]
 python = ">=3.8.0,<4.0.0"
-Flask = "^2.3"
+Flask = "3.0.0"
 mkdocs-material = "^9.4.8"
 
 [tool.poetry.group.dev.dependencies]
