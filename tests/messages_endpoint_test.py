@@ -1,5 +1,6 @@
 from collections import Counter
 
+
 def test_when_blueprints_have_been_registered(client):
     assert "messages" in client.application.blueprints
 
