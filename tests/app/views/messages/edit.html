@@ -3,7 +3,7 @@
 {% block content %}
 
 <form action="{{ url_for('messages.update', id=1) }}" method="POST">
-  <input type="hidden" name="_method" value="put">
+  {{ method('PUT') }}
 
   <input type="text" name="title" id="title">
 

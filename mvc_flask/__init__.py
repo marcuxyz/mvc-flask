@@ -4,6 +4,7 @@ from flask import Flask
 from flask.blueprints import Blueprint
 
 from .router import Router
+from .middlewares.html import HTMLMiddleware
 from .middlewares.http_method_override import (
     HTTPMethodOverrideMiddleware,
     CustomRequest,
@@ -23,7 +24,12 @@ class FlaskMVC:
         app.request_class = CustomRequest
         app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)
 
+        # register blueprint
         self.register_blueprint(app)
+
+        @app.context_processor
+        def inject_stage_and_region():
+            return dict(method=HTMLMiddleware().method)
 
     def register_blueprint(self, app: Flask):
         # load routes defined from users
