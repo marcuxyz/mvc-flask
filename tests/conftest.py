@@ -1,6 +1,7 @@
 import pytest
 from splinter import Browser
 
+from tests.app.models.message import Message
 from tests.app import create_app
 from tests.app import db
 
@@ -10,6 +11,7 @@ def test_client():
     app.testing = True
     app_context = app.test_request_context()
     app_context.push()
+
     return app
 
 
@@ -19,6 +21,10 @@ def client():
 
     with app.test_client() as client:
         db.create_all()
+
+        message = Message(title="Message One")
+        db.session.add(message)
+        db.session.commit()
 
         yield client
 
@@ -32,6 +38,10 @@ def browser():
 
     with app.test_client():
         db.create_all()
+
+        message = Message(title="Message One")
+        db.session.add(message)
+        db.session.commit()
 
         yield Browser("flask", app=app)
 

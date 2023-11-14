@@ -4,10 +4,26 @@ from tests.app.models.message import Message
 from tests.app import db
 
 
+def test_must_have_put_input_hidden(browser):
+    message = Message.query.filter_by(title="Message One").first()
+
+    browser.visit(url_for("messages.edit", id=message.id))
+
+    assert browser.is_element_present_by_name("_method")
+    assert browser.is_element_present_by_value("PUT")
+
+
+def test_must_have_put_input_hidden(browser):
+    message = Message.query.filter_by(title="Message One").first()
+
+    browser.visit(url_for("messages.show", id=message.id))
+
+    assert browser.is_element_present_by_name("_method")
+    assert browser.is_element_present_by_value("DELETE")
+
+
 def test_update_message_using_put_http_method(browser):
-    message = Message(title="Message One")
-    db.session.add(message)
-    db.session.commit()
+    message = Message.query.filter_by(title="Message One").first()
 
     browser.visit(url_for("messages.edit", id=message.id))
     browser.fill("title", "Message updated")
@@ -17,9 +33,7 @@ def test_update_message_using_put_http_method(browser):
 
 
 def test_delete_message_using_put_http_method(browser):
-    message = Message(title="Message One")
-    db.session.add(message)
-    db.session.commit()
+    message = Message.query.filter_by(title="Message One").first()
 
     browser.visit(url_for("messages.show", id=message.id))
     browser.find_by_value("delete").click()
