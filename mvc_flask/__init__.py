@@ -6,6 +6,7 @@ from flask.blueprints import Blueprint
 from .router import Router
 from .middlewares.hook_middleware import HookMiddleware
 
+from .helpers.html.input_method_helper import InputMethodHelper
 
 
 class FlaskMVC:
@@ -26,7 +27,7 @@ class FlaskMVC:
 
         @app.context_processor
         def inject_stage_and_region():
-            return dict(method=HTMLMiddleware().method)
+            return dict(method=InputMethodHelper().input_hidden_method)
 
     def register_blueprint(self, app: Flask):
         # load routes defined from users
@@ -39,6 +40,7 @@ class FlaskMVC:
             obj = import_module(f"{self.path}.controllers.{controller}_controller")
             view_func = getattr(obj, f"{controller.title()}Controller")
             instance_of_controller = view_func()
+
             HookMiddleware().register(instance_of_controller, blueprint)
 
             for resource in route[1]:

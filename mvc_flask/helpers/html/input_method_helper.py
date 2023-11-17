@@ -1,7 +1,7 @@
 import markupsafe
 
 
-class HTMLMiddleware:
+class InputMethodHelper:
     """
     A middleware class for handling HTML-related operations, specifically for creating hidden input fields
     with specific methods (like PUT and DELETE) that are not natively supported by HTML forms.
@@ -12,6 +12,24 @@ class HTMLMiddleware:
     - _delete: Private method to generate a hidden input field for the DELETE method.
     - method: Public method to handle the generation of appropriate HTML based on a given string.
     """
+
+    def input_hidden_method(self, input_method):
+        """
+        Determines the appropriate HTML string to return based on the given method string.
+
+        Args:
+        - string (str): The method string (e.g., 'put', 'delete').
+
+        Returns:
+        - Markup: A markupsafe.Markup object containing the appropriate HTML string.
+                  This object is safe to render directly in templates.
+        """
+        result = {
+            "put": self._put(),
+            "delete": self._delete(),
+        }[input_method.lower()]
+
+        return markupsafe.Markup(result)
 
     def _input_html(self, input_method):
         """
@@ -42,21 +60,3 @@ class HTMLMiddleware:
         - str: An HTML string for a hidden input element for the DELETE method.
         """
         return self._input_html("delete")
-
-    def method(self, string):
-        """
-        Determines the appropriate HTML string to return based on the given method string.
-
-        Args:
-        - string (str): The method string (e.g., 'put', 'delete').
-
-        Returns:
-        - Markup: A markupsafe.Markup object containing the appropriate HTML string.
-                  This object is safe to render directly in templates.
-        """
-        result = {
-            "put": self._put(),
-            "delete": self._delete(),
-        }[string.lower()]
-
-        return markupsafe.Markup(result)
