@@ -1,5 +1,5 @@
 class CallbacksController:
-    before_request = ['before']
+    before_request = ["before"]
 
     def index(self):
         return self.page

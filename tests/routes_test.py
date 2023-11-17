@@ -4,7 +4,12 @@ from tests.app import create_app
 
 
 def test_when_blueprints_have_been_registered(client):
-    assert set(client.application.blueprints) == {"messages", "health", "posts", "callbacks"}
+    assert set(client.application.blueprints) == {
+        "messages",
+        "health",
+        "posts",
+        "callbacks",
+    }
 
 
 def test_when_not_exists_registered_blueprints(client):

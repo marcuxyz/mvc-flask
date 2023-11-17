@@ -1,5 +1,6 @@
 from flask import Request
 
+
 class CustomRequestMiddleware(Request):
     @property
     def form(self):
