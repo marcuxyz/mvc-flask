@@ -4,11 +4,8 @@ from flask import Flask
 from flask.blueprints import Blueprint
 
 from .router import Router
-from .middlewares.html import HTMLMiddleware
-from .middlewares.http_method_override import (
-    HTTPMethodOverrideMiddleware,
-    CustomRequest,
-)
+from .middlewares.hook_middleware import HookMiddleware
+
 
 
 class FlaskMVC:
@@ -42,7 +39,7 @@ class FlaskMVC:
             obj = import_module(f"{self.path}.controllers.{controller}_controller")
             view_func = getattr(obj, f"{controller.title()}Controller")
             instance_of_controller = view_func()
-            self.hook.register(instance_of_controller, blueprint)
+            HookMiddleware().register(instance_of_controller, blueprint)
 
             for resource in route[1]:
                 blueprint.add_url_rule(
