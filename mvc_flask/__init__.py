@@ -4,6 +4,9 @@ from flask import Flask
 from flask.blueprints import Blueprint
 
 from .router import Router
+
+from .middlewares.http.method_override_midlleware import MethodOverrideMiddleware
+from .middlewares.http.custom_request_middleware import CustomRequestMiddleware
 from .middlewares.hook_middleware import HookMiddleware
 
 from .helpers.html.input_method_helper import InputMethodHelper
@@ -15,12 +18,11 @@ class FlaskMVC:
             self.init_app(app, path)
 
     def init_app(self, app: Flask = None, path="app"):
-        self.hook = Hook()
         self.path = path
 
         app.template_folder = "views"
-        app.request_class = CustomRequest
-        app.wsgi_app = HTTPMethodOverrideMiddleware(app.wsgi_app)
+        app.request_class = CustomRequestMiddleware
+        app.wsgi_app = MethodOverrideMiddleware(app.wsgi_app)
 
         # register blueprint
         self.register_blueprint(app)
@@ -52,27 +54,3 @@ class FlaskMVC:
                 )
 
             app.register_blueprint(blueprint)
-
-
-class Hook:
-    def register(self, instance_of_controller, blueprint):
-        accept_attributes = [
-            "before_request",
-            "after_request",
-            "teardown_request",
-            "after_app_request",
-            "before_app_request",
-            "teardown_app_request",
-            "before_app_first_request",
-        ]
-
-        attrs = [
-            attr for attr in dir(instance_of_controller) if attr in accept_attributes
-        ]
-
-        if attrs:
-            for attr in attrs:
-                values = getattr(instance_of_controller, attr)
-                for value in values:
-                    hook_method = getattr(instance_of_controller, value)
-                    getattr(blueprint, attr)(hook_method)

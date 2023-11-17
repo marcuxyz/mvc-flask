@@ -1,4 +1,4 @@
-class HookMidleware:
+class HookMiddleware:
     def register(self, controller_instance, blueprint_instance):
         attrs = [attr for attr in dir(controller_instance) if attr in self.accept_attributes]
 

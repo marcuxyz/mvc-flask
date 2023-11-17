@@ -1,8 +1,7 @@
-from flask import Request
 from werkzeug.formparser import parse_form_data
 
 
-class HTTPMethodOverrideMiddleware:
+class MethodOverrideMiddleware:
     allowed_methods = frozenset(
         [
             "GET",
@@ -12,7 +11,14 @@ class HTTPMethodOverrideMiddleware:
             "PATCH",
         ]
     )
-    bodyless_methods = frozenset(["GET", "HEAD", "OPTIONS", "DELETE"])
+    bodyless_methods = frozenset(
+        [
+            "GET",
+            "HEAD",
+            "OPTIONS",
+            "DELETE",
+        ]
+    )
 
     def __init__(self, app, input_name="_method"):
         self.app = app
@@ -32,17 +38,3 @@ class HTTPMethodOverrideMiddleware:
                 environ["CONTENT_LENGTH"] = "0"
 
         return self.app(environ, start_response)
-
-
-class CustomRequest(Request):
-    @property
-    def form(self):
-        if "wsgi._post_form" in self.environ:
-            return self.environ["wsgi._post_form"]
-        return super().form
-
-    @property
-    def files(self):
-        if "wsgi._post_files" in self.environ:
-            return self.environ["wsgi._post_files"]
-        return super().files
