@@ -41,14 +41,14 @@ class FlaskMVC:
 
             obj = import_module(f"{self.path}.controllers.{controller}_controller")
             view_func = getattr(obj, f"{controller.title()}Controller")
-
-            self.hook.register(view_func, blueprint)
+            instance_of_controller = view_func()
+            self.hook.register(instance_of_controller, blueprint)
 
             for resource in route[1]:
                 blueprint.add_url_rule(
                     rule=resource.path,
                     endpoint=resource.action,
-                    view_func=getattr(view_func(), resource.action),
+                    view_func=getattr(instance_of_controller, resource.action),
                     methods=resource.method,
                 )
 
@@ -56,7 +56,7 @@ class FlaskMVC:
 
 
 class Hook:
-    def register(self, ctrl, blueprint):
+    def register(self, instance_of_controller, blueprint):
         accept_attributes = [
             "before_request",
             "after_request",
@@ -66,11 +66,14 @@ class Hook:
             "teardown_app_request",
             "before_app_first_request",
         ]
-        attrs = [attr for attr in dir(ctrl()) if attr in accept_attributes]
+
+        attrs = [
+            attr for attr in dir(instance_of_controller) if attr in accept_attributes
+        ]
+
         if attrs:
             for attr in attrs:
-                values = getattr(ctrl(), attr)
-
+                values = getattr(instance_of_controller, attr)
                 for value in values:
-                    hook_method = getattr(ctrl(), value)
+                    hook_method = getattr(instance_of_controller, value)
                     getattr(blueprint, attr)(hook_method)
