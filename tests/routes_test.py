@@ -4,7 +4,7 @@ from tests.app import create_app
 
 
 def test_when_blueprints_have_been_registered(client):
-    assert set(client.application.blueprints) == {"messages", "health", "posts"}
+    assert set(client.application.blueprints) == {"messages", "health", "posts", "callbacks"}
 
 
 def test_when_not_exists_registered_blueprints(client):
@@ -12,6 +12,7 @@ def test_when_not_exists_registered_blueprints(client):
         "messages": 1,
         "health": 1,
         "posts": 1,
+        "callbacks": 1,
     }
 
 
@@ -42,7 +43,7 @@ def test_when_there_are_many_registered_routes(client):
         for route in routes.methods
     ]
 
-    assert methods.count("GET") == 7
+    assert methods.count("GET") == 8
     assert methods.count("POST") == 1
     assert methods.count("PUT") == 1
     assert methods.count("PATCH") == 1
