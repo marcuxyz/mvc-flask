@@ -5,7 +5,7 @@ from flask.blueprints import Blueprint
 
 from .router import Router
 
-from .middlewares.http.method_override_midlleware import MethodOverrideMiddleware
+from .middlewares.http.method_override_middleware import MethodOverrideMiddleware
 from .middlewares.http.custom_request_middleware import CustomRequestMiddleware
 from .middlewares.hook_middleware import HookMiddleware
 
