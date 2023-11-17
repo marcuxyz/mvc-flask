@@ -1,13 +1,13 @@
 from collections import namedtuple
 
-from .namespace import Namespace
+from .namespace_middleware import NamespaceMiddleware
 
 Model = namedtuple("Model", "method path controller action")
 
 
-class Router:
+class RouterMiddleware:
     """
-    Router class for managing routes in a web application.
+    RouterMiddleware class for managing routes in a web application.
 
     This class provides methods to define and manage different HTTP routes
     (GET, POST, PUT, DELETE) for the application's controllers and actions.
@@ -51,7 +51,7 @@ class Router:
 
         routes = {}
 
-        for route in Router.ROUTES:
+        for route in RouterMiddleware.ROUTES:
             value = list(route.values())[0]
             for key in route:
                 if key not in routes:
@@ -63,16 +63,16 @@ class Router:
     @staticmethod
     def namespace(name: str):
         """
-        Creates a namespace for routes.
+        Creates a namespace middleware for routes.
 
         Args:
             name (str): The name of the namespace.
 
         Returns:
-            Namespace: An instance of Namespace associated with the given name.
+            NamespaceMiddleware: An instance of NamespaceMiddleware associated with the given name.
         """
 
-        return Namespace(name, Router)
+        return NamespaceMiddleware(name, RouterMiddleware)
 
     @staticmethod
     def get(path: str, resource: str):
@@ -85,7 +85,9 @@ class Router:
         """
 
         controller, action = resource.split("#")
-        Router.ROUTES.append({controller: Model(["GET"], path, controller, action)})
+        RouterMiddleware.ROUTES.append(
+            {controller: Model(["GET"], path, controller, action)}
+        )
 
     @staticmethod
     def post(path: str, resource: str):
@@ -98,7 +100,9 @@ class Router:
         """
 
         controller, action = resource.split("#")
-        Router.ROUTES.append({controller: Model(["POST"], path, controller, action)})
+        RouterMiddleware.ROUTES.append(
+            {controller: Model(["POST"], path, controller, action)}
+        )
 
     @staticmethod
     def put(path: str, resource: str):
@@ -111,7 +115,7 @@ class Router:
         """
 
         controller, action = resource.split("#")
-        Router.ROUTES.append(
+        RouterMiddleware.ROUTES.append(
             {controller: Model(["PUT", "PATCH"], path, controller, action)},
         )
 
@@ -126,7 +130,9 @@ class Router:
         """
 
         controller, action = resource.split("#")
-        Router.ROUTES.append({controller: Model(["DELETE"], path, controller, action)})
+        RouterMiddleware.ROUTES.append(
+            {controller: Model(["DELETE"], path, controller, action)}
+        )
 
     @staticmethod
     def all(resource: str, only=None, base_path=""):
@@ -149,7 +155,7 @@ class Router:
             "delete",
         ]
         actions = only.split() if isinstance(only, str) else only
-        Router._add_routes(resource, actions if actions else group, base_path)
+        RouterMiddleware._add_routes(resource, actions if actions else group, base_path)
 
     @staticmethod
     def _add_routes(name, actions, base_path):
@@ -185,7 +191,7 @@ class Router:
             path = f"{base_path}/{name}{urls.get(action, '')}"
 
             if action in parameters:
-                getattr(Router, parameters[action])(path, f"{name}#{action}")
+                getattr(RouterMiddleware, parameters[action])(path, f"{name}#{action}")
                 continue
 
-            getattr(Router, groups[action])(path, f"{name}#{action}")
+            getattr(RouterMiddleware, groups[action])(path, f"{name}#{action}")

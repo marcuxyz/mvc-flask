@@ -1,8 +1,5 @@
-"""Namespace module."""
-
-
-class Namespace:
-    """Namespace."""
+class NamespaceMiddleware:
+    """NamespaceMiddleware."""
 
     def __init__(self, name: str, router):
         self.name = name

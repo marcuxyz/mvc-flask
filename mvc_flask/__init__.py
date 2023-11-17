@@ -3,7 +3,7 @@ from importlib import import_module
 from flask import Flask
 from flask.blueprints import Blueprint
 
-from .router import Router
+from .middlewares.http.router_middleware import RouterMiddleware as Router
 
 from .middlewares.http.method_override_middleware import MethodOverrideMiddleware
 from .middlewares.http.custom_request_middleware import CustomRequestMiddleware
