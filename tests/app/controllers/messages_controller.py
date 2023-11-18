@@ -28,7 +28,7 @@ class MessagesController:
         return render_template("messages/edit.html")
 
     def update(self, id):
-        message = Message.query.get(id)
+        message = Message.query.filter_by(id=id).first()
 
         if request.headers["Content-Type"] == "application/json":
             message.title = request.json["title"]
@@ -44,7 +44,7 @@ class MessagesController:
             return render_template("messages/show.html", message=message)
 
     def delete(self, id):
-        message = Message.query.get(id)
+        message = Message.query.filter_by(id=id).first()
         db.session.delete(message)
         db.session.commit()
 

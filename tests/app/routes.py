@@ -1,6 +1,7 @@
 from mvc_flask import Router
 
 Router.all("messages")
+Router.all("callbacks", only=["index"])
 
 api = Router.namespace("/api/v1")
 
