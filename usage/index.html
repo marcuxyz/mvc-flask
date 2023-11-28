@@ -534,8 +534,8 @@
 <div class="highlight"><pre><span></span><code><span class="x">&lt;!--  app/views/messages/edit.html --&gt;</span>
 
 <span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}</span>
-<span class="x">  &lt;form action=&quot;</span><span class="cp">{{</span> <span class="nv">url_for</span><span class="o">(</span><span class="s1">&#39;messages.update&#39;</span><span class="o">,</span> <span class="nv">id</span><span class="o">=</span><span class="nv">message.id</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot; method=&quot;POST&quot;&gt;</span>
-<span class="x">    &lt;input type=&quot;hidden&quot; name=&quot;_method&quot; value=&quot;put&quot;&gt;</span>
+<span class="x">  &lt;form action=&quot;</span><span class="cp">{{</span> <span class="nv">url_for</span><span class="o">(</span><span class="s1">&#39;messages.update&#39;</span><span class="o">,</span> <span class="nv">id</span><span class="o">=</span><span class="nv">message.id</span><span class="o">)</span> <span class="cp">}}</span><span class="x">&quot; method=&quot;post&quot;&gt;</span>
+<span class="x">    </span><span class="cp">{{</span> <span class="nv">method</span><span class="o">(</span><span class="s1">&#39;PUT&#39;</span><span class="o">)</span> <span class="cp">}}</span>
 <span class="x">    &lt;input type=&quot;text&quot; name=&quot;title&quot; id=&quot;title&quot; value=&quot;Yeahh!&quot;&gt;</span>
 
 <span class="x">    &lt;input type=&quot;submit&quot; value=&quot;send&quot;&gt;</span>
@@ -543,7 +543,7 @@
 <span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
 </code></pre></div>
 
-<p>The <input type="hidden" name="_method" value="put"> is necessary to work successfully!</p>
+<p>You can use the <code>{{ method('PUT|DELETE|PATCH') }}</code> to creates supports for PUT and DELETE methods to forms.</p>
 
 
 
