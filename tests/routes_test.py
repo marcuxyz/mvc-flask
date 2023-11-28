@@ -48,7 +48,7 @@ def test_when_there_are_many_registered_routes(client):
         for route in routes.methods
     ]
 
-    assert methods.count("GET") == 8
+    assert methods.count("GET") == 9
     assert methods.count("POST") == 1
     assert methods.count("PUT") == 1
     assert methods.count("PATCH") == 1

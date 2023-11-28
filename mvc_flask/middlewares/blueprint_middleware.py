@@ -3,7 +3,7 @@ from importlib import import_module
 
 from flask.blueprints import Blueprint
 
-from .hook_middleware import HookMiddleware
+from .callback_middleware import CallbackMiddleware
 
 from .http.router_middleware import RouterMiddleware as Router
 
@@ -18,20 +18,20 @@ class BlueprintMiddleware:
 
     def register(self):
         for route in Router._method_route().items():
-            controller = route[0]
-            blueprint = Blueprint(controller, controller)
+            controller_name = route[0]
+            blueprint = Blueprint(controller_name, controller_name)
 
-            obj = import_module(f"{self.path}.controllers.{controller}_controller")
-            view_func = getattr(obj, f"{controller.title()}Controller")
-            instance_of_controller = view_func()
+            obj = import_module(f"{self.path}.controllers.{controller_name}_controller")
+            view_func = getattr(obj, f"{controller_name.title()}Controller")
+            instance_controller = view_func()
 
-            HookMiddleware().register(instance_of_controller, blueprint)
+            CallbackMiddleware(self.app, controller_name, instance_controller).register()
 
             for resource in route[1]:
                 blueprint.add_url_rule(
                     rule=resource.path,
                     endpoint=resource.action,
-                    view_func=getattr(instance_of_controller, resource.action),
+                    view_func=getattr(instance_controller, resource.action),
                     methods=resource.method,
                 )
 
