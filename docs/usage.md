@@ -28,8 +28,8 @@ class MessagesController:
 <!--  app/views/messages/edit.html -->
 
 {% block content %}
-  <form action="{{ url_for('messages.update', id=message.id) }}" method="POST">
-    <input type="hidden" name="_method" value="put">
+  <form action="{{ url_for('messages.update', id=message.id) }}" method="post">
+    {{ method('PUT') }}
     <input type="text" name="title" id="title" value="Yeahh!">
 
     <input type="submit" value="send">
@@ -37,4 +37,4 @@ class MessagesController:
 {% endblock %}
 ```
 
-The <input type="hidden" name="_method" value="put"> is necessary to work successfully!
+You can use the `{{ method('PUT|DELETE|PATCH') }}` to creates supports for PUT and DELETE methods to forms.

@@ -10,13 +10,13 @@ class HomeController:
         return render_template("index.html")
 ```
 
-If you have a question, please, check the app directory for more details.
+## Callbacks
 
-To use the hooks as `before_request`, `after_request`, etc... Just describe it in the controller, see:
+You can use the callbacks as `before_request` and `after_request` to called the function before or after request... See:
 
 ```python
 class HomeController:
-    before_request = ["hi"]
+    before_request = dict(callback="hi", actions="index")
 
     def index(self):
         return "home"
