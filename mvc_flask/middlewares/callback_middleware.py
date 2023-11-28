@@ -1,5 +1,6 @@
 from flask import Flask, request
 
+
 class CallbackMiddleware:
     def __init__(self, app: Flask, controller_name: str, controller) -> None:
         """
@@ -22,6 +23,7 @@ class CallbackMiddleware:
 
         The hooks are retrieved using the get_hook_method function and executed using the execute_hook function.
         """
+
         def before_request_hook():
             hook_method, actions = self.get_hook_method("before_request")
             if hook_method:
