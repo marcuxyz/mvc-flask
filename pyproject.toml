@@ -20,7 +20,7 @@ mkdocs-material = "^9.4.8"
 [tool.poetry.group.dev.dependencies]
 flask-sqlalchemy = "^3.0.5"
 pytest = "^7.4.3"
-black = "^23.3.0"
+black = ">=23.3,<25.0"
 splinter = {version = "^0.18.1", extras = ["flask"]}
 urllib3 = "^1.26.18"
 
