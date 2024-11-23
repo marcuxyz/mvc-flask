@@ -16,6 +16,7 @@ homepage = "https://github.com/marcuxyz/mvc_flask"
 python = ">=3.9.0,<4.0.0"
 Flask = "3.1.0"
 mkdocs-material = "^9.4.8"
+greenlet = "^3.1.1"
 
 [tool.poetry.group.dev.dependencies]
 flask-sqlalchemy = "^3.0.5"
