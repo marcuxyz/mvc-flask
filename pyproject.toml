@@ -19,7 +19,7 @@ mkdocs-material = "^9.4.8"
 greenlet = "^3.1.1"
 
 [tool.poetry.group.dev.dependencies]
-flask-sqlalchemy = "^3.0.5"
+flask-sqlalchemy = "3.1.1"
 pytest = "^7.4.3"
 black = ">=23.3,<25.0"
 splinter = {version = "^0.19.0", extras = ["flask"]}
