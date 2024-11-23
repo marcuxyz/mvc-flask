@@ -1,4 +1,4 @@
-name: unit test
+name: check lint
 
 on:
   pull_request:
@@ -36,6 +36,6 @@ jobs:
     - name: Install dependencies
       run: poetry install
 
-    - name: run tests
+    - name: run lint
       run: |
-        make test
+        make check
