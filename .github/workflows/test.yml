@@ -26,9 +26,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install Poetry
-      uses: Gr1N/setup-poetry@v8
+      uses: abatilo/actions-poetry@v2
       with:
-        poetry-version: 1.8.3
+        poetry-version: 1.8.4
 
     - name: Disables creation of virtualenvs
       run: poetry config virtualenvs.create false
