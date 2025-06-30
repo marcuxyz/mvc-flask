@@ -13,7 +13,7 @@ def test_must_have_put_input_hidden(browser):
     assert browser.is_element_present_by_value("PUT")
 
 
-def test_must_have_put_input_hidden(browser):
+def test_must_have_delete_input_hidden(browser):
     message = Message.query.filter_by(title="Message One").first()
 
     browser.visit(url_for("messages.show", id=message.id))
