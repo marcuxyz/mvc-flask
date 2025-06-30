@@ -1,6 +1,7 @@
 """
 Comprehensive tests for MVC Flask callback middleware system.
 """
+
 import pytest
 from flask import url_for, request, Response
 
@@ -9,6 +10,7 @@ from mvc_flask.middlewares.callback_middleware import CallbackMiddleware
 
 
 # Callback Middleware Tests
+
 
 def test_before_request_execution(client):
     """Test that before_request callback is executed."""
@@ -80,10 +82,12 @@ def test_hook_execution_with_matching_endpoint(app):
     with app.test_request_context("/callbacks"):
         # Mock the request to simulate endpoint matching
         from unittest.mock import patch
-        with patch('flask.request') as mock_request:
+
+        with patch("flask.request") as mock_request:
             mock_request.endpoint = "callbacks.index"
 
             executed = []
+
             def mock_hook():
                 executed.append("called")
 
@@ -99,10 +103,12 @@ def test_hook_execution_without_matching_endpoint(app):
     with app.test_request_context("/other"):
         # Mock the request to simulate endpoint not matching
         from unittest.mock import patch
-        with patch('flask.request') as mock_request:
+
+        with patch("flask.request") as mock_request:
             mock_request.endpoint = "other.index"
 
             executed = []
+
             def mock_hook():
                 executed.append("called")
 
@@ -112,8 +118,10 @@ def test_hook_execution_without_matching_endpoint(app):
 
 # Callback Configuration Tests
 
+
 def test_multiple_actions_before_request(app):
     """Test before_request callback with multiple actions."""
+
     class MultiActionController:
         before_request = dict(callback="setup", actions="index show edit")
 
@@ -121,13 +129,13 @@ def test_multiple_actions_before_request(app):
             self.data = "initialized"
 
         def index(self):
-            return getattr(self, 'data', 'not initialized')
+            return getattr(self, "data", "not initialized")
 
         def show(self, id):
-            return getattr(self, 'data', 'not initialized')
+            return getattr(self, "data", "not initialized")
 
         def edit(self, id):
-            return getattr(self, 'data', 'not initialized')
+            return getattr(self, "data", "not initialized")
 
     controller = MultiActionController()
     middleware = CallbackMiddleware(app, "multi", controller)
@@ -138,6 +146,7 @@ def test_multiple_actions_before_request(app):
 
 def test_after_request_with_response_modification(app):
     """Test after_request callback modifying response."""
+
     class ResponseModifierController:
         after_request = dict(callback="modify_response", actions="index")
 
@@ -154,7 +163,8 @@ def test_after_request_with_response_modification(app):
     with app.test_request_context("/modifier"):
         # Mock the request to simulate endpoint matching
         from unittest.mock import patch
-        with patch('flask.request') as mock_request:
+
+        with patch("flask.request") as mock_request:
             mock_request.endpoint = "modifier.index"
 
             response = Response("test")
@@ -167,8 +177,10 @@ def test_after_request_with_response_modification(app):
 
 # Edge Cases Tests
 
+
 def test_callback_without_actions(app):
     """Test callback configuration without actions."""
+
     class NoActionsController:
         before_request = dict(callback="setup", actions="")
 
@@ -184,6 +196,7 @@ def test_callback_without_actions(app):
 
 def test_callback_with_invalid_method(app):
     """Test callback configuration with invalid method."""
+
     class InvalidMethodController:
         before_request = dict(callback="nonexistent_method", actions="index")
 
@@ -202,6 +215,7 @@ def test_callback_with_invalid_method(app):
 
 def test_empty_controller(app):
     """Test middleware with controller that has no callbacks."""
+
     class EmptyController:
         def index(self):
             return "empty"
@@ -216,6 +230,7 @@ def test_empty_controller(app):
 
 def test_malformed_callback_config(app):
     """Test malformed callback configuration."""
+
     class MalformedController:
         before_request = "not a dict"
 
@@ -227,6 +242,7 @@ def test_malformed_callback_config(app):
 
 
 # Integration Tests
+
 
 def test_full_request_cycle_with_callbacks(client):
     """Test complete request cycle with both before and after callbacks."""

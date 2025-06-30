@@ -1,6 +1,7 @@
 """
 Comprehensive tests for the MVC Flask routing system.
 """
+
 import pytest
 from collections import Counter
 from flask import url_for
@@ -10,6 +11,7 @@ from mvc_flask.middlewares.http.router_middleware import RouterMiddleware
 
 
 # Router System Tests
+
 
 def test_blueprints_registration(client):
     """Test that all expected blueprints are registered."""
@@ -43,14 +45,23 @@ def test_messages_routes_structure(client):
 def test_messages_endpoints_completeness(client):
     """Test that all CRUD endpoints are properly registered."""
     expected_endpoints = {
-        "messages.index", "messages.show", "messages.new",
-        "messages.create", "messages.edit", "messages.update", "messages.delete"
+        "messages.index",
+        "messages.show",
+        "messages.new",
+        "messages.create",
+        "messages.edit",
+        "messages.update",
+        "messages.delete",
     }
 
-    actual_endpoints = {route.endpoint for route in client.application.url_map.iter_rules()}
+    actual_endpoints = {
+        route.endpoint for route in client.application.url_map.iter_rules()
+    }
 
     for expected_endpoint in expected_endpoints:
-        assert expected_endpoint in actual_endpoints, f"Endpoint {expected_endpoint} not found"
+        assert (
+            expected_endpoint in actual_endpoints
+        ), f"Endpoint {expected_endpoint} not found"
 
 
 def test_http_methods_distribution(client):
@@ -70,16 +81,19 @@ def test_http_methods_distribution(client):
     }
 
     for method, expected_count in expected_methods.items():
-        assert method_counts[method] == expected_count, \
-            f"Expected {expected_count} {method} routes, got {method_counts[method]}"
+        assert (
+            method_counts[method] == expected_count
+        ), f"Expected {expected_count} {method} routes, got {method_counts[method]}"
 
 
 # Namespace Routing Tests
 
+
 def test_api_namespace_routes(client):
     """Test that API namespace routes are properly prefixed."""
     api_routes = [
-        route.rule for route in client.application.url_map.iter_rules()
+        route.rule
+        for route in client.application.url_map.iter_rules()
         if route.rule.startswith("/api/v1")
     ]
 
@@ -92,7 +106,8 @@ def test_api_namespace_routes(client):
 def test_nested_namespace_functionality(client):
     """Test that nested namespaces work correctly."""
     posts_routes = [
-        route.rule for route in client.application.url_map.iter_rules()
+        route.rule
+        for route in client.application.url_map.iter_rules()
         if "/posts" in route.rule
     ]
 
@@ -103,7 +118,8 @@ def test_nested_namespace_functionality(client):
 def test_namespace_endpoint_naming(client):
     """Test that namespace endpoints follow correct naming conventions."""
     health_endpoints = [
-        route.endpoint for route in client.application.url_map.iter_rules()
+        route.endpoint
+        for route in client.application.url_map.iter_rules()
         if "health" in route.endpoint
     ]
 
@@ -111,6 +127,7 @@ def test_namespace_endpoint_naming(client):
 
 
 # Router Methods Isolation Tests
+
 
 def test_get_route_registration():
     """Test GET route registration."""
@@ -186,6 +203,7 @@ def test_all_routes_with_only_filter():
 
 
 # Router Edge Cases Tests
+
 
 def test_multiple_routes_same_controller():
     """Test multiple routes for the same controller."""

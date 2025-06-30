@@ -1,6 +1,7 @@
 """
 Integration tests for MVC Flask - testing complete workflows and interactions.
 """
+
 import pytest
 import json
 import threading
@@ -14,6 +15,7 @@ from tests.test_utils import TimerUtil, DatabaseHelper, ResponseHelper, performa
 
 # Complete Workflow Tests
 
+
 def test_full_crud_workflow_via_api(empty_client, response_helper):
     """Test complete CRUD workflow using API endpoints."""
     response = empty_client.get(url_for("messages.index"))
@@ -23,7 +25,7 @@ def test_full_crud_workflow_via_api(empty_client, response_helper):
     create_response = empty_client.post(
         url_for("messages.create"),
         data=json.dumps(create_data),
-        headers={"Content-Type": "application/json"}
+        headers={"Content-Type": "application/json"},
     )
     response_helper.assert_status_code(create_response, 201)
     response_helper.assert_json_response(create_response, create_data)
@@ -38,7 +40,7 @@ def test_full_crud_workflow_via_api(empty_client, response_helper):
     update_response = empty_client.put(
         url_for("messages.update", id=message.id),
         data=json.dumps(update_data),
-        headers={"Content-Type": "application/json"}
+        headers={"Content-Type": "application/json"},
     )
     response_helper.assert_status_code(update_response, 200)
     response_helper.assert_json_response(update_response, update_data)
@@ -60,7 +62,7 @@ def test_full_crud_workflow_via_forms(empty_browser, app):
         create_response = client.post(
             url_for("messages.create"),
             data=json.dumps({"title": "Form Test Message"}),
-            headers={"Content-Type": "application/json"}
+            headers={"Content-Type": "application/json"},
         )
         assert create_response.status_code == 201
 
@@ -96,6 +98,7 @@ def test_multi_resource_interaction(client):
 
 # Error Handling Tests
 
+
 def test_404_handling(client):
     """Test 404 error handling."""
     response = client.get("/nonexistent/route")
@@ -113,7 +116,7 @@ def test_invalid_json_handling(empty_client):
     response = empty_client.post(
         url_for("messages.create"),
         data="invalid json data",
-        headers={"Content-Type": "application/json"}
+        headers={"Content-Type": "application/json"},
     )
     assert response.status_code in [400, 422, 500]
 
@@ -123,7 +126,7 @@ def test_database_error_handling(empty_client, db_helper):
     response = empty_client.post(
         url_for("messages.create"),
         data=json.dumps({"title": "DB Test Message"}),
-        headers={"Content-Type": "application/json"}
+        headers={"Content-Type": "application/json"},
     )
     assert response.status_code == 201
 
@@ -131,6 +134,7 @@ def test_database_error_handling(empty_client, db_helper):
 
 
 # Performance Tests
+
 
 @performance_test(max_duration=2.0)
 def test_multiple_request_performance(client):
@@ -149,7 +153,7 @@ def test_crud_operations_performance(empty_client):
         response = empty_client.post(
             url_for("messages.create"),
             data=json.dumps({"title": f"Performance Test {i}"}),
-            headers={"Content-Type": "application/json"}
+            headers={"Content-Type": "application/json"},
         )
         assert response.status_code == 201
 
@@ -164,7 +168,7 @@ def test_crud_operations_performance(empty_client):
         response = empty_client.put(
             url_for("messages.update", id=message_id),
             data=json.dumps({"title": f"Updated Performance Test {message_id}"}),
-            headers={"Content-Type": "application/json"}
+            headers={"Content-Type": "application/json"},
         )
         assert response.status_code == 200
 
@@ -197,11 +201,14 @@ def test_concurrent_access_simulation(client):
     for thread in threads:
         thread.join()
 
-    assert len(results) >= 5, f"Expected at least 5 successful results, got {len(results)}"
+    assert (
+        len(results) >= 5
+    ), f"Expected at least 5 successful results, got {len(results)}"
     assert all(status == 200 for status in results), f"Some requests failed: {results}"
 
 
 # Security Tests
+
 
 def test_csrf_protection_compatibility(client):
     """Test that CSRF protection works with the framework."""
@@ -209,7 +216,7 @@ def test_csrf_protection_compatibility(client):
     response = client.put(
         url_for("messages.update", id=message.id),
         data={"title": "CSRF Test Update"},
-        headers={"Content-Type": "application/x-www-form-urlencoded"}
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
 
     assert response.status_code == 200
@@ -221,10 +228,7 @@ def test_method_override_security(client):
 
     response = client.post(
         url_for("messages.update", id=message.id),
-        data={
-            "_method": "PUT",
-            "title": "Valid Method Override"
-        }
+        data={"_method": "PUT", "title": "Valid Method Override"},
     )
     assert response.status_code == 200
 
@@ -242,7 +246,7 @@ def test_input_sanitization(empty_client):
         response = empty_client.post(
             url_for("messages.create"),
             data=json.dumps({"title": test_input}),
-            headers={"Content-Type": "application/json"}
+            headers={"Content-Type": "application/json"},
         )
 
         assert response.status_code == 201
@@ -253,6 +257,7 @@ def test_input_sanitization(empty_client):
 
 
 # Scalability Tests
+
 
 def test_large_dataset_handling(empty_client, db_helper):
     """Test application behavior with larger datasets."""
@@ -268,7 +273,7 @@ def test_large_dataset_handling(empty_client, db_helper):
     response = empty_client.put(
         url_for("messages.update", id=middle_message.id),
         data=json.dumps({"title": "Updated Large Dataset Message"}),
-        headers={"Content-Type": "application/json"}
+        headers={"Content-Type": "application/json"},
     )
     assert response.status_code == 200
 
@@ -291,10 +296,11 @@ def test_memory_usage_stability(client):
 
 # Configuration Tests
 
+
 def test_development_configuration(app):
     """Test application works in development mode."""
-    app.config['DEBUG'] = True
-    app.config['TESTING'] = True
+    app.config["DEBUG"] = True
+    app.config["TESTING"] = True
 
     with app.app_context():
         db.create_all()
@@ -306,8 +312,8 @@ def test_development_configuration(app):
 
 def test_production_like_configuration(app):
     """Test application works in production-like mode."""
-    app.config['DEBUG'] = False
-    app.config['TESTING'] = False
+    app.config["DEBUG"] = False
+    app.config["TESTING"] = False
 
     with app.app_context():
         db.create_all()
@@ -322,7 +328,7 @@ def test_custom_template_folder_integration():
     from mvc_flask import FlaskMVC
 
     app = Flask(__name__)
-    app.config['TESTING'] = True
+    app.config["TESTING"] = True
 
     mvc = FlaskMVC(app, path="tests.app")
 

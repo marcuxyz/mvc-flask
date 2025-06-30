@@ -1,6 +1,7 @@
 """
 Comprehensive version testing for mvc-flask package.
 """
+
 import pytest
 import re
 import json
@@ -11,6 +12,7 @@ from mvc_flask.__version__ import __version__
 
 # Version Information Tests
 
+
 def test_version_exists():
     """Test that version information exists."""
     assert __version__ is not None
@@ -20,8 +22,10 @@ def test_version_exists():
 
 def test_version_format():
     """Test that version follows semantic versioning format."""
-    semver_pattern = r'^\d+\.\d+\.\d+$'
-    assert re.match(semver_pattern, __version__), f"Version {__version__} doesn't follow semantic versioning"
+    semver_pattern = r"^\d+\.\d+\.\d+$"
+    assert re.match(
+        semver_pattern, __version__
+    ), f"Version {__version__} doesn't follow semantic versioning"
 
 
 def test_current_version_value():
@@ -31,7 +35,7 @@ def test_current_version_value():
 
 def test_version_components():
     """Test individual version components."""
-    major, minor, patch = __version__.split('.')
+    major, minor, patch = __version__.split(".")
 
     assert major.isdigit(), f"Major version '{major}' is not numeric"
     assert minor.isdigit(), f"Minor version '{minor}' is not numeric"
@@ -45,14 +49,16 @@ def test_version_components():
 def test_version_import_paths():
     """Test that version can be imported from different paths."""
     from mvc_flask.__version__ import __version__ as version_direct
+
     assert version_direct == __version__
 
     try:
         import mvc_flask
-        if hasattr(mvc_flask, '__version__'):
+
+        if hasattr(mvc_flask, "__version__"):
             version_main = mvc_flask.__version__
             # Check if it's a module (which means improper import) or string
-            if hasattr(version_main, '__version__'):
+            if hasattr(version_main, "__version__"):
                 version_main = version_main.__version__
             assert version_main == __version__
     except (ImportError, AttributeError):
@@ -70,29 +76,34 @@ def test_version_consistency_with_pyproject():
     pyproject_path = os.path.join(project_root, "pyproject.toml")
 
     if os.path.exists(pyproject_path):
-        with open(pyproject_path, 'r') as f:
+        with open(pyproject_path, "r") as f:
             pyproject_data = toml.load(f)
 
-        pyproject_version = pyproject_data.get("tool", {}).get("poetry", {}).get("version")
+        pyproject_version = (
+            pyproject_data.get("tool", {}).get("poetry", {}).get("version")
+        )
         if pyproject_version:
-            assert __version__ == pyproject_version, \
-                f"Version mismatch: __version__.py has {__version__}, pyproject.toml has {pyproject_version}"
+            assert (
+                __version__ == pyproject_version
+            ), f"Version mismatch: __version__.py has {__version__}, pyproject.toml has {pyproject_version}"
 
 
 # Version Comparison Tests
 
+
 def test_version_comparison_with_previous():
     """Test that current version is reasonable compared to expected previous versions."""
-    current_version = tuple(map(int, __version__.split('.')))
+    current_version = tuple(map(int, __version__.split(".")))
 
     minimum_expected = (2, 9, 0)
-    assert current_version >= minimum_expected, \
-        f"Current version {__version__} is lower than expected minimum {'.'.join(map(str, minimum_expected))}"
+    assert (
+        current_version >= minimum_expected
+    ), f"Current version {__version__} is lower than expected minimum {'.'.join(map(str, minimum_expected))}"
 
 
 def test_version_backward_compatibility_indicator():
     """Test version indicates backward compatibility."""
-    major, minor, patch = map(int, __version__.split('.'))
+    major, minor, patch = map(int, __version__.split("."))
 
     if major >= 2:
         assert minor >= 0, "Minor version should be non-negative for stable releases"
@@ -100,23 +111,25 @@ def test_version_backward_compatibility_indicator():
 
 def test_version_development_indicators():
     """Test that version doesn't contain development indicators in production."""
-    development_indicators = ['dev', 'alpha', 'beta', 'rc', 'pre']
+    development_indicators = ["dev", "alpha", "beta", "rc", "pre"]
 
     version_lower = __version__.lower()
     for indicator in development_indicators:
-        assert indicator not in version_lower, \
-            f"Version {__version__} contains development indicator '{indicator}'"
+        assert (
+            indicator not in version_lower
+        ), f"Version {__version__} contains development indicator '{indicator}'"
 
 
 # Version Metadata Tests
+
 
 def test_version_module_attributes():
     """Test that version module has expected attributes."""
     import mvc_flask.__version__ as version_module
 
-    assert hasattr(version_module, '__version__')
+    assert hasattr(version_module, "__version__")
 
-    optional_attributes = ['__author__', '__email__', '__description__']
+    optional_attributes = ["__author__", "__email__", "__description__"]
     for attr in optional_attributes:
         if hasattr(version_module, attr):
             assert isinstance(getattr(version_module, attr), str)
@@ -126,27 +139,33 @@ def test_package_version_accessibility():
     """Test that version is accessible from package imports."""
     import mvc_flask
 
-    assert hasattr(mvc_flask, 'FlaskMVC')
-    assert hasattr(mvc_flask, 'Router')
+    assert hasattr(mvc_flask, "FlaskMVC")
+    assert hasattr(mvc_flask, "Router")
 
 
 def test_version_string_properties():
     """Test string properties of version."""
-    assert __version__.strip() == __version__, "Version should not have leading/trailing whitespace"
+    assert (
+        __version__.strip() == __version__
+    ), "Version should not have leading/trailing whitespace"
 
     assert len(__version__.strip()) > 0, "Version should not be empty"
 
-    assert '.' in __version__, "Version should contain dots for component separation"
+    assert "." in __version__, "Version should contain dots for component separation"
 
-    assert __version__.count('.') == 2, f"Version should have exactly 2 dots, got {__version__.count('.')}"
+    assert (
+        __version__.count(".") == 2
+    ), f"Version should have exactly 2 dots, got {__version__.count('.')}"
 
 
 # Version Integration Tests
+
 
 def test_version_in_application_context(app):
     """Test that version information is available in application context."""
     with app.app_context():
         from mvc_flask.__version__ import __version__
+
         assert __version__ is not None
 
 

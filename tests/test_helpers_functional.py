@@ -1,6 +1,7 @@
 """
 Comprehensive tests for MVC Flask helpers and method override functionality.
 """
+
 import pytest
 import time
 from flask import url_for, render_template_string
@@ -11,6 +12,7 @@ from tests.app.models.message import Message
 
 
 # Input Method Helper Tests
+
 
 def test_put_method_html_generation():
     """Test PUT method hidden input generation."""
@@ -91,6 +93,7 @@ def test_markup_safety():
 
 # Method Override Integration Tests
 
+
 def test_put_input_hidden_in_edit_form(browser):
     """Test that PUT hidden input is present in edit forms."""
     message = Message.query.filter_by(title="Message One").first()
@@ -132,6 +135,7 @@ def test_method_override_middleware_configuration(app):
 
 # Form Method Override Tests
 
+
 def test_put_method_override_in_update(browser):
     """Test that PUT method override works for updates."""
     message = Message.query.filter_by(title="Message One").first()
@@ -143,6 +147,7 @@ def test_put_method_override_in_update(browser):
     browser.find_by_value("send").click()
 
     from tests.app import db
+
     db.session.refresh(message)
     assert message.title == "Updated via PUT override"
     assert message.title != original_title
@@ -171,16 +176,14 @@ def test_form_without_method_override(browser):
 
 # Edge Cases Tests
 
+
 def test_invalid_method_override_value(client):
     """Test form submission with invalid method override value."""
     message = Message.query.first()
 
     response = client.post(
         url_for("messages.update", id=message.id),
-        data={
-            "_method": "INVALID",
-            "title": "Should not update"
-        }
+        data={"_method": "INVALID", "title": "Should not update"},
     )
 
     assert response.status_code in [200, 400, 405]
@@ -192,10 +195,7 @@ def test_missing_method_override_value(client):
 
     response = client.post(
         url_for("messages.update", id=message.id),
-        data={
-            "_method": "",
-            "title": "Empty method override"
-        }
+        data={"_method": "", "title": "Empty method override"},
     )
 
     assert response.status_code in [200, 400, 405]
@@ -206,14 +206,14 @@ def test_method_override_with_get_request(client):
     message = Message.query.first()
 
     response = client.get(
-        url_for("messages.show", id=message.id),
-        query_string={"_method": "DELETE"}
+        url_for("messages.show", id=message.id), query_string={"_method": "DELETE"}
     )
 
     assert response.status_code == 200
 
 
 # Template Helper Integration Tests
+
 
 def test_helper_function_injection(app):
     """Test that helper functions are properly injected into templates."""
@@ -265,6 +265,7 @@ def test_multiple_helper_calls_in_template(client):
 
 
 # Performance Tests
+
 
 def test_helper_function_performance():
     """Test that helper functions perform well with multiple calls."""

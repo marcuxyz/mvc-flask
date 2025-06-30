@@ -1,6 +1,7 @@
 """
 Comprehensive test configuration with improved fixtures and utilities.
 """
+
 import pytest
 import tempfile
 import os
@@ -14,15 +15,17 @@ from tests.app import create_app, db
 def app():
     """Create application for the tests with session scope."""
     app = create_app()
-    app.config.update({
-        "TESTING": True,
-        "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
-        "WTF_CSRF_ENABLED": False,
-        "SECRET_KEY": "test-secret-key",
-        "SERVER_NAME": "localhost.localdomain",
-        "APPLICATION_ROOT": "/",
-        "PREFERRED_URL_SCHEME": "http"
-    })
+    app.config.update(
+        {
+            "TESTING": True,
+            "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
+            "WTF_CSRF_ENABLED": False,
+            "SECRET_KEY": "test-secret-key",
+            "SERVER_NAME": "localhost.localdomain",
+            "APPLICATION_ROOT": "/",
+            "PREFERRED_URL_SCHEME": "http",
+        }
+    )
 
     return app
 
@@ -116,6 +119,7 @@ def sample_messages(app):
 def db_helper():
     """Database helper for tests."""
     from tests.test_utils import DatabaseHelper
+
     return DatabaseHelper()
 
 
@@ -123,6 +127,7 @@ def db_helper():
 def response_helper():
     """Response helper for tests."""
     from tests.test_utils import ResponseHelper
+
     return ResponseHelper()
 
 
@@ -130,6 +135,7 @@ def response_helper():
 def route_helper():
     """Route helper for tests."""
     from tests.test_utils import RouteHelper
+
     return RouteHelper()
 
 
@@ -137,6 +143,7 @@ def route_helper():
 def validation_helper():
     """Validation helper for tests."""
     from tests.test_utils import ValidationHelper
+
     return ValidationHelper()
 
 
@@ -144,4 +151,5 @@ def validation_helper():
 def benchmark_helper():
     """Benchmark helper for tests."""
     from tests.test_utils import BenchmarkHelper
+
     return BenchmarkHelper()

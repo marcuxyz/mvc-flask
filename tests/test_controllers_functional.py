@@ -1,6 +1,7 @@
 """
 Comprehensive tests for MVC Flask controllers functionality.
 """
+
 import pytest
 import json
 from flask import url_for
@@ -10,6 +11,7 @@ from tests.app import db
 
 
 # CRUD Operations Tests
+
 
 def test_index_with_messages(client, sample_messages):
     """Test index action displays messages correctly."""
@@ -55,9 +57,7 @@ def test_create_with_json(empty_client):
     headers = {"Content-Type": "application/json"}
 
     response = empty_client.post(
-        url_for("messages.create"),
-        data=json.dumps(data),
-        headers=headers
+        url_for("messages.create"), data=json.dumps(data), headers=headers
     )
 
     assert response.status_code == 201
@@ -73,9 +73,7 @@ def test_create_without_data(empty_client):
 
     with pytest.raises(KeyError):
         empty_client.post(
-            url_for("messages.create"),
-            data=json.dumps({}),
-            headers=headers
+            url_for("messages.create"), data=json.dumps({}), headers=headers
         )
 
 
@@ -96,9 +94,7 @@ def test_update_with_json(client):
     headers = {"Content-Type": "application/json"}
 
     response = client.put(
-        url_for("messages.update", id=message.id),
-        data=json.dumps(data),
-        headers=headers
+        url_for("messages.update", id=message.id), data=json.dumps(data), headers=headers
     )
 
     assert response.status_code == 200
@@ -116,7 +112,7 @@ def test_update_with_form_data(client):
     response = client.put(
         url_for("messages.update", id=message.id),
         data={"title": "Form Updated Title"},
-        headers={"Content-Type": "application/x-www-form-urlencoded"}
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
 
     assert response.status_code == 200
@@ -132,9 +128,7 @@ def test_update_nonexistent_message(client):
 
     try:
         response = client.put(
-            url_for("messages.update", id=99999),
-            data=json.dumps(data),
-            headers=headers
+            url_for("messages.update", id=99999), data=json.dumps(data), headers=headers
         )
         assert response.status_code in [200, 404, 500]
     except Exception:
@@ -166,6 +160,7 @@ def test_delete_nonexistent_message(empty_client):
 
 # Controller Helper Tests
 
+
 def test_multiple_messages_handling(empty_client):
     """Test controller behavior with multiple messages."""
     messages = []
@@ -185,14 +180,13 @@ def test_multiple_messages_handling(empty_client):
 
 # Error Handling Tests
 
+
 def test_malformed_json_in_create(empty_client):
     """Test create action with malformed JSON."""
     headers = {"Content-Type": "application/json"}
 
     response = empty_client.post(
-        url_for("messages.create"),
-        data="invalid json",
-        headers=headers
+        url_for("messages.create"), data="invalid json", headers=headers
     )
 
     assert response.status_code in [400, 500]
@@ -205,7 +199,7 @@ def test_missing_content_type_in_update(client):
     try:
         response = client.put(
             url_for("messages.update", id=message.id),
-            data=json.dumps({"title": "Updated"})
+            data=json.dumps({"title": "Updated"}),
         )
         assert response.status_code in [200, 400, 500]
     except KeyError:
@@ -218,9 +212,7 @@ def test_empty_title_in_create(empty_client):
     headers = {"Content-Type": "application/json"}
 
     response = empty_client.post(
-        url_for("messages.create"),
-        data=json.dumps(data),
-        headers=headers
+        url_for("messages.create"), data=json.dumps(data), headers=headers
     )
 
     assert response.status_code == 201
@@ -228,12 +220,13 @@ def test_empty_title_in_create(empty_client):
 
 # Integration Tests
 
+
 def test_full_crud_workflow(empty_client):
     """Test complete CRUD workflow."""
     create_response = empty_client.post(
         url_for("messages.create"),
         data=json.dumps({"title": "Workflow Test Message"}),
-        headers={"Content-Type": "application/json"}
+        headers={"Content-Type": "application/json"},
     )
     assert create_response.status_code == 201
 
@@ -249,7 +242,7 @@ def test_full_crud_workflow(empty_client):
     update_response = empty_client.put(
         url_for("messages.update", id=message.id),
         data=json.dumps({"title": "Updated Workflow Message"}),
-        headers={"Content-Type": "application/json"}
+        headers={"Content-Type": "application/json"},
     )
     assert update_response.status_code == 200
 
@@ -262,17 +255,14 @@ def test_full_crud_workflow(empty_client):
 
 def test_concurrent_operations(empty_client):
     """Test concurrent operations on messages."""
-    messages_data = [
-        {"title": f"Concurrent Message {i}"}
-        for i in range(5)
-    ]
+    messages_data = [{"title": f"Concurrent Message {i}"} for i in range(5)]
 
     created_messages = []
     for data in messages_data:
         response = empty_client.post(
             url_for("messages.create"),
             data=json.dumps(data),
-            headers={"Content-Type": "application/json"}
+            headers={"Content-Type": "application/json"},
         )
         assert response.status_code == 201
         created_messages.append(response.json)
