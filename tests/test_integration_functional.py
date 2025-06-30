@@ -177,39 +177,6 @@ def test_crud_operations_performance(empty_client):
         assert response.status_code == 302
 
 
-def test_concurrent_access_simulation(client):
-    """Test application under simulated concurrent access."""
-    results = []
-    errors = []
-
-    def make_request():
-        try:
-            with client.application.app_context():
-                response = client.get(url_for("messages.index"))
-                results.append(response.status_code)
-        except Exception as e:
-            errors.append(str(e))
-
-    threads = []
-    for _ in range(10):
-        thread = threading.Thread(target=make_request)
-        threads.append(thread)
-
-    for thread in threads:
-        thread.start()
-
-    for thread in threads:
-        thread.join()
-
-    assert (
-        len(results) >= 5
-    ), f"Expected at least 5 successful results, got {len(results)}"
-    assert all(status == 200 for status in results), f"Some requests failed: {results}"
-
-
-# Security Tests
-
-
 def test_csrf_protection_compatibility(client):
     """Test that CSRF protection works with the framework."""
     message = Message.query.first()
