@@ -59,3 +59,45 @@ app
 ```
 
 Please visit the documentation to check more details https://marcuxyz.github.io/mvc-flask
+
+## Changelog
+
+### Version 2.9.0 - Test Infrastructure Refactor
+
+#### Test Structure Improvements
+- **Major Test Refactor**: Converted all test files from class-based to function-based structure for improved readability and maintainability
+- **Comprehensive Test Coverage**: Enhanced test coverage across all major components including:
+  - Controllers (CRUD operations, error handling, integration workflows)
+  - Callbacks (middleware system, hooks, configuration)
+  - Helpers (HTML input method helpers, method override functionality)
+  - Integration (complete workflows, performance, security)
+  - Version management (semantic versioning, metadata validation)
+- **Test Organization**: Reorganized test files with clear naming convention using `test_*_functional.py` pattern
+- **Performance Testing**: Added comprehensive performance benchmarking and optimization validation
+- **Security Testing**: Enhanced security validation including CSRF protection, method override security, and input sanitization
+
+#### Code Quality Enhancements
+- **Comment Cleanup**: Removed unnecessary comments throughout test codebase while preserving critical documentation
+- **English Standardization**: Ensured all code, comments, and documentation use native American English
+- **Test Utilities**: Improved test helper functions and utilities for better test maintainability
+- **Error Handling**: Enhanced error handling validation across all test scenarios
+
+#### Developer Experience
+- **Improved Readability**: Function-based tests are more straightforward to read and understand
+- **Better Isolation**: Each test function is completely isolated, reducing interdependencies
+- **Faster Development**: Simplified test structure enables faster test development and debugging
+- **Enhanced Documentation**: Added comprehensive test documentation outlining best practices and patterns
+
+#### Technical Improvements
+- **Memory Optimization**: Added memory usage stability testing to prevent memory leaks
+- **Concurrent Testing**: Enhanced concurrent access simulation and testing
+- **Configuration Testing**: Comprehensive testing across different Flask configuration scenarios
+- **Scalability Validation**: Added large dataset handling and scalability characteristic testing
+
+#### Migration Notes
+- All existing test functionality remains intact
+- No breaking changes to core MVC Flask functionality
+- Test execution performance improved due to simplified structure
+- Enhanced debugging capabilities with clearer test failure reporting
+
+This release significantly improves the development experience and code quality while maintaining full backward compatibility with existing applications.

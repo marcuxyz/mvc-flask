@@ -13,9 +13,10 @@ homepage = "https://github.com/marcuxyz/mvc_flask"
 
 
 [tool.poetry.dependencies]
-python = ">=3.8.0,<4.0.0"
+python = ">=3.10.0,<=3.12.10"
 Flask = "3.0.0"
 mkdocs-material = "^9.4.8"
+method-override = "^0.3.0"
 
 [tool.poetry.group.dev.dependencies]
 flask-sqlalchemy = "^3.0.5"

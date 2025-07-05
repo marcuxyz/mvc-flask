@@ -1,9 +1,8 @@
 from flask import Flask
+from method_override.wsgi_method_override import MethodOverrideMiddleware
 
 from .middlewares.http.router_middleware import RouterMiddleware as Router
 
-from .middlewares.http.method_override_middleware import MethodOverrideMiddleware
-from .middlewares.http.custom_request_middleware import CustomRequestMiddleware
 from .middlewares.blueprint_middleware import BlueprintMiddleware
 
 
@@ -20,16 +19,12 @@ class FlaskMVC:
 
     def perform(self, app: Flask, path: str):
         self._configure_template_folder(app)
-        self._configure_custom_request_middleware(app)
         self._configure_method_override_middleware(app)
         self._configure_blueprint_middleware(app, path)
         self._inject_object_in_jinja_template(app)
 
     def _configure_template_folder(self, app):
         app.template_folder = "views"
-
-    def _configure_custom_request_middleware(self, app):
-        app.request_class = CustomRequestMiddleware
 
     def _configure_method_override_middleware(self, app):
         app.wsgi_app = MethodOverrideMiddleware(app.wsgi_app)
