@@ -8,6 +8,7 @@ from .middlewares.blueprint_middleware import BlueprintMiddleware
 
 
 from .helpers.html.input_method_helper import InputMethodHelper
+from . import cli
 
 
 class FlaskMVC:
@@ -24,6 +25,7 @@ class FlaskMVC:
         self._configure_method_override_middleware(app)
         self._configure_blueprint_middleware(app, path)
         self._inject_object_in_jinja_template(app)
+        self._configure_cli_commands(app)
 
     def _configure_template_folder(self, app):
         app.template_folder = "views"
@@ -43,3 +45,7 @@ class FlaskMVC:
             return {
                 "method": InputMethodHelper().input_hidden_method,
             }
+
+    def _configure_cli_commands(self, app):
+        """Register CLI commands with the Flask app."""
+        cli.init_app(app)
