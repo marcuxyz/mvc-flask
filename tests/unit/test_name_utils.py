@@ -1,8 +1,9 @@
 """Unit tests for name utilities."""
 
 import pytest
-from mvc_flask.core.name_utils import NameUtils
+
 from mvc_flask.core.exceptions import InvalidControllerNameError
+from mvc_flask.core.name_utils import NameUtils
 
 
 class TestNameUtils:

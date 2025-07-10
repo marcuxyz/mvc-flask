@@ -2,13 +2,14 @@
 Comprehensive test configuration with improved fixtures and utilities.
 """
 
-import pytest
-import tempfile
 import os
+import tempfile
+
+import pytest
 from splinter import Browser
 
-from tests.app.models.message import Message
 from tests.app import create_app, db
+from tests.app.models.message import Message
 
 
 @pytest.fixture(scope="session")

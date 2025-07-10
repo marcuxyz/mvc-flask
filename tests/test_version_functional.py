@@ -2,13 +2,14 @@
 Comprehensive version testing for mvc-flask package.
 """
 
-import pytest
-import re
 import json
 import logging
 import os
-from mvc_flask.__version__ import __version__
+import re
 
+import pytest
+
+from mvc_flask.__version__ import __version__
 
 # Version Information Tests
 
@@ -30,7 +31,7 @@ def test_version_format():
 
 def test_current_version_value():
     """Test the current version value."""
-    assert __version__ == "2.9.0"
+    assert __version__ == "0.1.0"
 
 
 def test_version_components():

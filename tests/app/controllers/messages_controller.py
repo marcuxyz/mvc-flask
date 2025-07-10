@@ -1,6 +1,7 @@
-from flask import render_template, redirect, url_for, request
-from tests.app.models.message import Message
+from flask import redirect, render_template, request, url_for
+
 from tests.app import db
+from tests.app.models.message import Message
 
 
 class MessagesController:

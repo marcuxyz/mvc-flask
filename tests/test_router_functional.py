@@ -2,13 +2,13 @@
 Comprehensive tests for the MVC Flask routing system.
 """
 
-import pytest
 from collections import Counter
+
+import pytest
 from flask import url_for
 
 from mvc_flask import Router
 from mvc_flask.middlewares.http.router_middleware import RouterMiddleware
-
 
 # Router System Tests
 

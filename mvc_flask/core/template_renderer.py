@@ -1,8 +1,9 @@
 """Template rendering utilities for MVC Flask CLI."""
 
 from pathlib import Path
+from typing import Any, Dict
+
 from jinja2 import Environment, FileSystemLoader
-from typing import Dict, Any
 
 from .exceptions import TemplateNotFoundError
 

@@ -5,13 +5,14 @@ following Flask and Python best practices.
 """
 
 import logging
-import click
-from flask.cli import with_appcontext
 from typing import Optional
 
-from .core.generators import ControllerGenerator
-from .core.exceptions import ControllerGenerationError, InvalidControllerNameError
+import click
+from flask.cli import with_appcontext
+
 from .core.config import CLIConfig
+from .core.exceptions import ControllerGenerationError, InvalidControllerNameError
+from .core.generators import ControllerGenerator
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
