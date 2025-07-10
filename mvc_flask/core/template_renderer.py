@@ -18,9 +18,7 @@ class TemplateRenderer:
         """
         self.templates_dir = templates_dir
         self._env = Environment(
-            loader=FileSystemLoader(templates_dir),
-            trim_blocks=True,
-            lstrip_blocks=True
+            loader=FileSystemLoader(templates_dir), trim_blocks=True, lstrip_blocks=True
         )
 
     def render(self, template_name: str, context: Dict[str, Any]) -> str:

@@ -47,7 +47,7 @@ class FileHandler:
             ControllerGenerationError: If file writing fails
         """
         try:
-            with open(file_path, 'w', encoding='utf-8') as f:
+            with open(file_path, "w", encoding="utf-8") as f:
                 f.write(content)
         except Exception as e:
             raise ControllerGenerationError(

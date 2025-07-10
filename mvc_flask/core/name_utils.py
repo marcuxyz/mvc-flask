@@ -21,7 +21,7 @@ class NameUtils:
         if not name:
             raise InvalidControllerNameError("Controller name cannot be empty")
 
-        if not re.match(r'^[a-zA-Z]\w*$', name):
+        if not re.match(r"^[a-zA-Z]\w*$", name):
             raise InvalidControllerNameError(
                 "Controller name must start with a letter and contain only "
                 "letters, numbers, and underscores"
@@ -39,7 +39,7 @@ class NameUtils:
         """
         NameUtils.validate_controller_name(name)
 
-        if not name.endswith('_controller'):
+        if not name.endswith("_controller"):
             return f"{name}_controller"
         return name
 
@@ -54,10 +54,10 @@ class NameUtils:
             Properly formatted class name
         """
         # Remove _controller suffix if present
-        base_name = controller_name.replace('_controller', '')
+        base_name = controller_name.replace("_controller", "")
 
         # Split by underscore and capitalize each word
-        words = base_name.split('_')
-        class_name = ''.join(word.capitalize() for word in words)
+        words = base_name.split("_")
+        class_name = "".join(word.capitalize() for word in words)
 
         return f"{class_name}Controller"

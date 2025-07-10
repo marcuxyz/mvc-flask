@@ -26,7 +26,9 @@ class ControllerGenerator:
         self.name_utils = NameUtils()
         self.config = CLIConfig()
 
-    def generate(self, name: str, output_path: Optional[str] = None, force: bool = False) -> Path:
+    def generate(
+        self, name: str, output_path: Optional[str] = None, force: bool = False
+    ) -> Path:
         """Generate a new controller file.
 
         Args:
@@ -68,8 +70,7 @@ class ControllerGenerator:
 
             # Render template
             content = self.template_renderer.render(
-                self.config.CONTROLLER_TEMPLATE,
-                {'class_name': class_name}
+                self.config.CONTROLLER_TEMPLATE, {"class_name": class_name}
             )
 
             # Write file
