@@ -1,4 +1,4 @@
-"""Configuration for MVC Flask CLI."""
+"""Configuration for Flask MVC CLI."""
 
 import os
 from pathlib import Path

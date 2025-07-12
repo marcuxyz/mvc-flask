@@ -1,4 +1,4 @@
-from mvc_flask import Router
+from flask_mvc import Router
 
 Router.all("messages")
 Router.all("callbacks", only="index show")

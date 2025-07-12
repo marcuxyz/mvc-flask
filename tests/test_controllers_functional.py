@@ -1,5 +1,5 @@
 """
-Comprehensive tests for MVC Flask controllers functionality.
+Comprehensive tests for Flask MVC controllers functionality.
 """
 
 import json

@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 @click.group()
 def mvc():
-    """MVC Flask commands."""
+    """Flask MVC commands."""
     pass
 
 

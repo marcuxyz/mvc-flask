@@ -2,11 +2,11 @@
 
 <p align="center">This extension facilitates the application of this design pattern in Flask </p>
 <p align="center">
-    <a href="https://github.com/marcuxyz/mvc-flask/actions/workflows/test.yml">
-        <img src="https://github.com/marcuxyz/mvc-flask/actions/workflows/test.yml/badge.svg?branch=main" alt="unit test" height="18">
+    <a href="https://github.com/marcuxyz/flask-mvc/actions/workflows/test.yml">
+        <img src="https://github.com/marcuxyz/flask-mvc/actions/workflows/test.yml/badge.svg?branch=main" alt="unit test" height="18">
     </a>
-    <a href="https://badge.fury.io/py/mvc-flask">
-        <img src="https://badge.fury.io/py/mvc-flask.svg" alt="PyPI version" height="18">
+    <a href="https://badge.fury.io/py/flask-mvc">
+        <img src="https://badge.fury.io/py/flask-mvc.svg" alt="PyPI version" height="18">
     </a>
 </p>
 
@@ -14,23 +14,23 @@
 Designed to allow developers to implement the Model-View-Controller (MVC) design pattern in Flask applications with the help of this extension.
 <hr />
 
-Install MVC Flask using pip:
+Install Flask MVC using pip:
 
 ```shell
-$ pip install mvc_flask
+$ pip install flaskmvc
 ```
 
-Install MVC Flask using poetry:
+Install Flask MVC using poetry:
 
 ```shell
-$ poetry add mvc_flask
+$ poetry add flaskmvc
 ```
 
 Now, let's get started:
 
 ```python
 from flask import Flask
-from mvc_flask import FlaskMVC
+from flask_mvc import FlaskMVC
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -50,7 +50,7 @@ def create_app():
 
 ## Features
 
-MVC Flask builds on provides the best architecture experience for Flask, and gives you:
+Flask MVC builds on provides the best architecture experience for Flask, and gives you:
 
 - You can directories as controllers, models, and views.
 - It Supports the controllers' creation, and you can separate the logic of your application of business rules
@@ -60,4 +60,4 @@ MVC Flask builds on provides the best architecture experience for Flask, and giv
 
 ## Dependencies
 
-MVC Flask just depends on the Flask extensions to working and requires Python >=3.8.0,<4.0.0.
+Flask MVC just depends on the Flask extensions to working and requires Python >=3.8.0,<4.0.0.

@@ -1,5 +1,5 @@
 """
-Integration tests for MVC Flask - testing complete workflows and interactions.
+Integration tests for Flask MVC - testing complete workflows and interactions.
 """
 
 import gc
@@ -292,7 +292,7 @@ def test_production_like_configuration(app):
 
 def test_custom_template_folder_integration():
     """Test that custom template folder configuration works."""
-    from mvc_flask import FlaskMVC
+    from flask_mvc import FlaskMVC
 
     app = Flask(__name__)
     app.config["TESTING"] = True

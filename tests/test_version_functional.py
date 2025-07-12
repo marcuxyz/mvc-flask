@@ -1,5 +1,5 @@
 """
-Comprehensive version testing for mvc-flask package.
+Comprehensive version testing for flask-mvc package.
 """
 
 import json
@@ -9,7 +9,7 @@ import re
 
 import pytest
 
-from mvc_flask.__version__ import __version__
+from flask_mvc.__version__ import __version__
 
 # Version Information Tests
 
@@ -49,15 +49,15 @@ def test_version_components():
 
 def test_version_import_paths():
     """Test that version can be imported from different paths."""
-    from mvc_flask.__version__ import __version__ as version_direct
+    from flask_mvc.__version__ import __version__ as version_direct
 
     assert version_direct == __version__
 
     try:
-        import mvc_flask
+        import flask_mvc
 
-        if hasattr(mvc_flask, "__version__"):
-            version_main = mvc_flask.__version__
+        if hasattr(flask_mvc, "__version__"):
+            version_main = flask_mvc.__version__
             # Check if it's a module (which means improper import) or string
             if hasattr(version_main, "__version__"):
                 version_main = version_main.__version__
@@ -126,7 +126,7 @@ def test_version_development_indicators():
 
 def test_version_module_attributes():
     """Test that version module has expected attributes."""
-    import mvc_flask.__version__ as version_module
+    import flask_mvc.__version__ as version_module
 
     assert hasattr(version_module, "__version__")
 
@@ -138,10 +138,10 @@ def test_version_module_attributes():
 
 def test_package_version_accessibility():
     """Test that version is accessible from package imports."""
-    import mvc_flask
+    import flask_mvc
 
-    assert hasattr(mvc_flask, "FlaskMVC")
-    assert hasattr(mvc_flask, "Router")
+    assert hasattr(flask_mvc, "FlaskMVC")
+    assert hasattr(flask_mvc, "Router")
 
 
 def test_version_string_properties():
@@ -165,7 +165,7 @@ def test_version_string_properties():
 def test_version_in_application_context(app):
     """Test that version information is available in application context."""
     with app.app_context():
-        from mvc_flask.__version__ import __version__
+        from flask_mvc.__version__ import __version__
 
         assert __version__ is not None
 
@@ -174,7 +174,7 @@ def test_version_logging_compatibility():
     """Test that version can be used in logging contexts."""
     logger = logging.getLogger("test")
     try:
-        logger.info(f"MVC Flask version: {__version__}")
+        logger.info(f"Flask MVC version: {__version__}")
         assert True
     except Exception as e:
         pytest.fail(f"Version logging failed: {e}")

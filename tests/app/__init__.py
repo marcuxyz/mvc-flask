@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from mvc_flask import FlaskMVC
+from flask_mvc import FlaskMVC
 
 db = SQLAlchemy()
 

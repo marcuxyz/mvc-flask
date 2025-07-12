@@ -1,6 +1,6 @@
 .PHONY: test
 test:
-	FLAKS_ENV=testing pytest -vvv
+	poetry run pytest --cov=flask_mvc --cov-report=xml --cov-report=term-missing -vvv
 
 
 .PHONY: format

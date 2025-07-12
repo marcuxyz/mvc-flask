@@ -1,5 +1,5 @@
 """
-Comprehensive tests for the MVC Flask routing system.
+Comprehensive tests for the Flask MVC routing system.
 """
 
 from collections import Counter
@@ -7,8 +7,8 @@ from collections import Counter
 import pytest
 from flask import url_for
 
-from mvc_flask import Router
-from mvc_flask.middlewares.http.router_middleware import RouterMiddleware
+from flask_mvc import Router
+from flask_mvc.middlewares.http.router_middleware import RouterMiddleware
 
 # Router System Tests
 

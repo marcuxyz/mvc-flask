@@ -1,5 +1,5 @@
 """
-Comprehensive tests for MVC Flask helpers and method override functionality.
+Comprehensive tests for Flask MVC helpers and method override functionality.
 """
 
 import time
@@ -8,7 +8,7 @@ import markupsafe
 import pytest
 from flask import render_template_string, url_for
 
-from mvc_flask.helpers.html.input_method_helper import InputMethodHelper
+from flask_mvc.helpers.html.input_method_helper import InputMethodHelper
 from tests.app.models.message import Message
 
 # Input Method Helper Tests

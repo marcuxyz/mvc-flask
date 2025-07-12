@@ -1,4 +1,4 @@
-"""Template rendering utilities for MVC Flask CLI."""
+"""Template rendering utilities for Flask MVC CLI."""
 
 from pathlib import Path
 from typing import Any, Dict
