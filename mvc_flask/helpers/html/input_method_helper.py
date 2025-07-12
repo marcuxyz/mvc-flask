@@ -29,7 +29,7 @@ class InputMethodHelper:
             "delete": self._delete(),
         }[input_method.lower()]
 
-        return markupsafe.Markup(result) #  nosec: B704
+        return markupsafe.Markup(result)  #  nosec: B704
 
     def _input_html(self, input_method):
         """
