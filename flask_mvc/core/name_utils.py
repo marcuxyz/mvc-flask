@@ -1,4 +1,4 @@
-"""Name utilities for MVC Flask CLI."""
+"""Name utilities for Flask MVC CLI."""
 
 import re
 

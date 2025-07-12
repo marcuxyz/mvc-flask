@@ -4,19 +4,19 @@
 
 ![Flask MVC Logo](https://img.shields.io/badge/Flask-MVC-blue?style=for-the-badge&logo=flask)
 
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/marcuxyz/mvc_flask?style=flat-square)](https://github.com/marcuxyz/mvc_flask)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/marcuxyz/mvc_flask/unit%20test?style=flat-square)](https://github.com/marcuxyz/mvc_flask/actions)
-[![GitHub](https://img.shields.io/github/license/marcuxyz/mvc_flask?style=flat-square)](https://github.com/marcuxyz/mvc_flask/blob/main/LICENSE)
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/mvc_flask?style=flat-square)](https://pypi.org/project/mvc_flask/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mvc_flask?style=flat-square)](https://pypi.org/project/mvc_flask/)
-[![PyPI](https://img.shields.io/pypi/v/mvc_flask?style=flat-square)](https://pypi.org/project/mvc_flask/)
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/marcuxyz/flask-mvc?style=flat-square)](https://github.com/marcuxyz/flask-mvc)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/marcuxyz/flask-mvc/unit%20test?style=flat-square)](https://github.com/marcuxyz/flask-mvc/actions)
+[![GitHub](https://img.shields.io/github/license/marcuxyz/flask-mvc?style=flat-square)](https://github.com/marcuxyz/flask-mvc/blob/main/LICENSE)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/flask_mvc?style=flat-square)](https://pypi.org/project/flask_mvc/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/flask_mvc?style=flat-square)](https://pypi.org/project/flask_mvc/)
+[![PyPI](https://img.shields.io/pypi/v/flask_mvc?style=flat-square)](https://pypi.org/project/flask_mvc/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 
 **Transform your Flask application into a structured MVC architecture with powerful CLI tools**
 
 [Installation](#installation) •
 [Quick Start](#quick-start) •
-[Documentation](https://marcuxyz.github.io/mvc-flask) •
+[Documentation](https://marcuxyz.github.io/flask-mvc) •
 [Examples](#examples) •
 [Contributing](#contributing)
 
@@ -38,20 +38,20 @@
 ### Using pip
 
 ```bash
-pip install mvc_flask
+pip install flask_mvc
 ```
 
 ### Using Poetry
 
 ```bash
-poetry add mvc_flask
+poetry add flask_mvc
 ```
 
 ### Development Installation
 
 ```bash
-git clone https://github.com/marcuxyz/mvc_flask.git
-cd mvc_flask
+git clone https://github.com/marcuxyz/flask-mvc.git
+cd flask_mvc
 poetry install
 ```
 
@@ -61,7 +61,7 @@ poetry install
 
 ```python
 from flask import Flask
-from mvc_flask import FlaskMVC
+from flask_mvc import FlaskMVC
 
 app = Flask(__name__)
 FlaskMVC(app)
@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
 ```python
 from flask import Flask
-from mvc_flask import FlaskMVC
+from flask_mvc import FlaskMVC
 
 mvc = FlaskMVC()
 
@@ -242,7 +242,7 @@ export FLASK_MVC_FILE_ENCODING="utf-8"
 ### Programmatic Configuration
 
 ```python
-from mvc_flask.core.config import CLIConfig
+from flask_mvc.core.config import CLIConfig
 
 # Override default settings
 CLIConfig.DEFAULT_CONTROLLERS_PATH = "src/controllers"
@@ -255,8 +255,8 @@ Flask MVC is built with testing in mind:
 
 ```python
 import pytest
-from mvc_flask.core.generators import ControllerGenerator
-from mvc_flask.core.exceptions import InvalidControllerNameError
+from flask_mvc.core.generators import ControllerGenerator
+from flask_mvc.core.exceptions import InvalidControllerNameError
 
 def test_controller_generation():
     generator = ControllerGenerator()
@@ -272,11 +272,11 @@ def test_controller_generation():
 
 ## 📚 Documentation
 
-- **[Full Documentation](https://marcuxyz.github.io/mvc-flask)** - Complete guide and API reference
-- **[Quick Start Guide](https://marcuxyz.github.io/mvc-flask/quickstart)** - Get up and running fast
-- **[Controller Guide](https://marcuxyz.github.io/mvc-flask/controllers)** - Working with controllers
-- **[Router Guide](https://marcuxyz.github.io/mvc-flask/router)** - Route configuration
-- **[CLI Reference](https://marcuxyz.github.io/mvc-flask/cli)** - Command-line tools
+- **[Full Documentation](https://marcuxyz.github.io/flask-mvc)** - Complete guide and API reference
+- **[Quick Start Guide](https://marcuxyz.github.io/flask-mvc/quickstart)** - Get up and running fast
+- **[Controller Guide](https://marcuxyz.github.io/flask-mvc/controllers)** - Working with controllers
+- **[Router Guide](https://marcuxyz.github.io/flask-mvc/router)** - Route configuration
+- **[CLI Reference](https://marcuxyz.github.io/flask-mvc/cli)** - Command-line tools
 
 ## 🤝 Contributing
 
@@ -286,8 +286,8 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ```bash
 # Clone the repository
-git clone https://github.com/marcuxyz/mvc_flask.git
-cd mvc_flask
+git clone https://github.com/marcuxyz/flask-mvc.git
+cd flask_mvc
 
 # Install dependencies
 poetry install
@@ -305,8 +305,8 @@ poetry run mkdocs serve
 
 ### Reporting Issues
 
-- **[Bug Reports](https://github.com/marcuxyz/mvc_flask/issues/new?template=bug_report.md)**
-- **[Feature Requests](https://github.com/marcuxyz/mvc_flask/issues/new?template=feature_request.md)**
+- **[Bug Reports](https://github.com/marcuxyz/flask-mvc/issues/new?template=bug_report.md)**
+- **[Feature Requests](https://github.com/marcuxyz/flask-mvc/issues/new?template=feature_request.md)**
 
 ## 📋 Requirements
 
@@ -327,9 +327,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Stats
 
-![GitHub stars](https://img.shields.io/github/stars/marcuxyz/mvc_flask?style=social)
-![GitHub forks](https://img.shields.io/github/forks/marcuxyz/mvc_flask?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/marcuxyz/mvc_flask?style=social)
+![GitHub stars](https://img.shields.io/github/stars/marcuxyz/flask-mvc?style=social)
+![GitHub forks](https://img.shields.io/github/forks/marcuxyz/flask-mvc?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/marcuxyz/flask-mvc?style=social)
 
 ---
 

@@ -1,5 +1,5 @@
 """
-Test utilities and helper functions for mvc-flask tests.
+Test utilities and helper functions for flask-mvc tests.
 """
 
 import functools

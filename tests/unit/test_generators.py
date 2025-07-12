@@ -6,8 +6,8 @@ from unittest.mock import Mock, patch, mock_open
 import tempfile
 import shutil
 
-from mvc_flask.core.generators import ControllerGenerator
-from mvc_flask.core.exceptions import (
+from flask_mvc.core.generators import ControllerGenerator
+from flask_mvc.core.exceptions import (
     ControllerGenerationError,
     InvalidControllerNameError,
 )
@@ -48,7 +48,7 @@ class TestControllerGenerator:
         assert generator.name_utils is not None
         assert generator.config is not None
 
-    @patch("mvc_flask.core.generators.CLIConfig.get_templates_dir")
+    @patch("flask_mvc.core.generators.CLIConfig.get_templates_dir")
     def test_init_without_templates_dir(self, mock_get_templates_dir):
         """Test ControllerGenerator initialization with default templates directory."""
         mock_get_templates_dir.return_value = self.templates_dir
@@ -65,21 +65,23 @@ class TestControllerGenerator:
         """Test successful controller generation."""
         output_dir = self.temp_dir / "controllers"
 
-        with patch.object(
-            self.generator.name_utils, "validate_controller_name"
-        ) as mock_validate, patch.object(
-            self.generator.name_utils, "normalize_controller_name"
-        ) as mock_normalize, patch.object(
-            self.generator.name_utils, "generate_class_name"
-        ) as mock_class_name, patch.object(
-            self.generator.file_handler, "file_exists"
-        ) as mock_exists, patch.object(
-            self.generator.file_handler, "ensure_directory_exists"
-        ) as mock_ensure_dir, patch.object(
-            self.generator.file_handler, "write_file"
-        ) as mock_write, patch.object(
-            self.generator.template_renderer, "render"
-        ) as mock_render:
+        with (
+            patch.object(
+                self.generator.name_utils, "validate_controller_name"
+            ) as mock_validate,
+            patch.object(
+                self.generator.name_utils, "normalize_controller_name"
+            ) as mock_normalize,
+            patch.object(
+                self.generator.name_utils, "generate_class_name"
+            ) as mock_class_name,
+            patch.object(self.generator.file_handler, "file_exists") as mock_exists,
+            patch.object(
+                self.generator.file_handler, "ensure_directory_exists"
+            ) as mock_ensure_dir,
+            patch.object(self.generator.file_handler, "write_file") as mock_write,
+            patch.object(self.generator.template_renderer, "render") as mock_render,
+        ):
             mock_normalize.return_value = "test_controller"
             mock_class_name.return_value = "TestController"
             mock_exists.return_value = False
@@ -103,27 +105,25 @@ class TestControllerGenerator:
                 expected_path, "class TestController:\n    pass"
             )
 
-    @patch("mvc_flask.core.generators.CLIConfig.get_controllers_path")
+    @patch("flask_mvc.core.generators.CLIConfig.get_controllers_path")
     def test_generate_controller_default_path(self, mock_get_path):
         """Test controller generation with default output path."""
         mock_get_path.return_value = "app/controllers"
         output_dir = Path("app/controllers")
 
-        with patch.object(
-            self.generator.name_utils, "validate_controller_name"
-        ), patch.object(
-            self.generator.name_utils, "normalize_controller_name"
-        ) as mock_normalize, patch.object(
-            self.generator.name_utils, "generate_class_name"
-        ) as mock_class_name, patch.object(
-            self.generator.file_handler, "file_exists"
-        ) as mock_exists, patch.object(
-            self.generator.file_handler, "ensure_directory_exists"
-        ), patch.object(
-            self.generator.file_handler, "write_file"
-        ), patch.object(
-            self.generator.template_renderer, "render"
-        ) as mock_render:
+        with (
+            patch.object(self.generator.name_utils, "validate_controller_name"),
+            patch.object(
+                self.generator.name_utils, "normalize_controller_name"
+            ) as mock_normalize,
+            patch.object(
+                self.generator.name_utils, "generate_class_name"
+            ) as mock_class_name,
+            patch.object(self.generator.file_handler, "file_exists") as mock_exists,
+            patch.object(self.generator.file_handler, "ensure_directory_exists"),
+            patch.object(self.generator.file_handler, "write_file"),
+            patch.object(self.generator.template_renderer, "render") as mock_render,
+        ):
             mock_normalize.return_value = "home_controller"
             mock_class_name.return_value = "HomeController"
             mock_exists.return_value = False
@@ -139,13 +139,13 @@ class TestControllerGenerator:
         """Test controller generation when file exists and force is False."""
         output_dir = self.temp_dir / "controllers"
 
-        with patch.object(
-            self.generator.name_utils, "validate_controller_name"
-        ), patch.object(
-            self.generator.name_utils, "normalize_controller_name"
-        ) as mock_normalize, patch.object(
-            self.generator.file_handler, "file_exists"
-        ) as mock_exists:
+        with (
+            patch.object(self.generator.name_utils, "validate_controller_name"),
+            patch.object(
+                self.generator.name_utils, "normalize_controller_name"
+            ) as mock_normalize,
+            patch.object(self.generator.file_handler, "file_exists") as mock_exists,
+        ):
             mock_normalize.return_value = "existing_controller"
             mock_exists.return_value = True
 
@@ -159,21 +159,19 @@ class TestControllerGenerator:
         """Test controller generation when file exists and force is True."""
         output_dir = self.temp_dir / "controllers"
 
-        with patch.object(
-            self.generator.name_utils, "validate_controller_name"
-        ), patch.object(
-            self.generator.name_utils, "normalize_controller_name"
-        ) as mock_normalize, patch.object(
-            self.generator.name_utils, "generate_class_name"
-        ) as mock_class_name, patch.object(
-            self.generator.file_handler, "file_exists"
-        ) as mock_exists, patch.object(
-            self.generator.file_handler, "ensure_directory_exists"
-        ), patch.object(
-            self.generator.file_handler, "write_file"
-        ) as mock_write, patch.object(
-            self.generator.template_renderer, "render"
-        ) as mock_render:
+        with (
+            patch.object(self.generator.name_utils, "validate_controller_name"),
+            patch.object(
+                self.generator.name_utils, "normalize_controller_name"
+            ) as mock_normalize,
+            patch.object(
+                self.generator.name_utils, "generate_class_name"
+            ) as mock_class_name,
+            patch.object(self.generator.file_handler, "file_exists") as mock_exists,
+            patch.object(self.generator.file_handler, "ensure_directory_exists"),
+            patch.object(self.generator.file_handler, "write_file") as mock_write,
+            patch.object(self.generator.template_renderer, "render") as mock_render,
+        ):
             mock_normalize.return_value = "existing_controller"
             mock_class_name.return_value = "ExistingController"
             mock_exists.return_value = True
@@ -199,19 +197,18 @@ class TestControllerGenerator:
         """Test controller generation when template rendering fails."""
         output_dir = self.temp_dir / "controllers"
 
-        with patch.object(
-            self.generator.name_utils, "validate_controller_name"
-        ), patch.object(
-            self.generator.name_utils, "normalize_controller_name"
-        ) as mock_normalize, patch.object(
-            self.generator.name_utils, "generate_class_name"
-        ) as mock_class_name, patch.object(
-            self.generator.file_handler, "file_exists"
-        ) as mock_exists, patch.object(
-            self.generator.file_handler, "ensure_directory_exists"
-        ), patch.object(
-            self.generator.template_renderer, "render"
-        ) as mock_render:
+        with (
+            patch.object(self.generator.name_utils, "validate_controller_name"),
+            patch.object(
+                self.generator.name_utils, "normalize_controller_name"
+            ) as mock_normalize,
+            patch.object(
+                self.generator.name_utils, "generate_class_name"
+            ) as mock_class_name,
+            patch.object(self.generator.file_handler, "file_exists") as mock_exists,
+            patch.object(self.generator.file_handler, "ensure_directory_exists"),
+            patch.object(self.generator.template_renderer, "render") as mock_render,
+        ):
             mock_normalize.return_value = "test_controller"
             mock_class_name.return_value = "TestController"
             mock_exists.return_value = False
@@ -226,21 +223,19 @@ class TestControllerGenerator:
         """Test controller generation when file writing fails."""
         output_dir = self.temp_dir / "controllers"
 
-        with patch.object(
-            self.generator.name_utils, "validate_controller_name"
-        ), patch.object(
-            self.generator.name_utils, "normalize_controller_name"
-        ) as mock_normalize, patch.object(
-            self.generator.name_utils, "generate_class_name"
-        ) as mock_class_name, patch.object(
-            self.generator.file_handler, "file_exists"
-        ) as mock_exists, patch.object(
-            self.generator.file_handler, "ensure_directory_exists"
-        ), patch.object(
-            self.generator.file_handler, "write_file"
-        ) as mock_write, patch.object(
-            self.generator.template_renderer, "render"
-        ) as mock_render:
+        with (
+            patch.object(self.generator.name_utils, "validate_controller_name"),
+            patch.object(
+                self.generator.name_utils, "normalize_controller_name"
+            ) as mock_normalize,
+            patch.object(
+                self.generator.name_utils, "generate_class_name"
+            ) as mock_class_name,
+            patch.object(self.generator.file_handler, "file_exists") as mock_exists,
+            patch.object(self.generator.file_handler, "ensure_directory_exists"),
+            patch.object(self.generator.file_handler, "write_file") as mock_write,
+            patch.object(self.generator.template_renderer, "render") as mock_render,
+        ):
             mock_normalize.return_value = "test_controller"
             mock_class_name.return_value = "TestController"
             mock_exists.return_value = False
@@ -256,19 +251,20 @@ class TestControllerGenerator:
         """Test controller generation when directory creation fails."""
         output_dir = self.temp_dir / "controllers"
 
-        with patch.object(
-            self.generator.name_utils, "validate_controller_name"
-        ), patch.object(
-            self.generator.name_utils, "normalize_controller_name"
-        ) as mock_normalize, patch.object(
-            self.generator.name_utils, "generate_class_name"
-        ) as mock_class_name, patch.object(
-            self.generator.file_handler, "file_exists"
-        ) as mock_exists, patch.object(
-            self.generator.file_handler, "ensure_directory_exists"
-        ) as mock_ensure_dir, patch.object(
-            self.generator.template_renderer, "render"
-        ) as mock_render:
+        with (
+            patch.object(self.generator.name_utils, "validate_controller_name"),
+            patch.object(
+                self.generator.name_utils, "normalize_controller_name"
+            ) as mock_normalize,
+            patch.object(
+                self.generator.name_utils, "generate_class_name"
+            ) as mock_class_name,
+            patch.object(self.generator.file_handler, "file_exists") as mock_exists,
+            patch.object(
+                self.generator.file_handler, "ensure_directory_exists"
+            ) as mock_ensure_dir,
+            patch.object(self.generator.template_renderer, "render") as mock_render,
+        ):
             mock_normalize.return_value = "test_controller"
             mock_class_name.return_value = "TestController"
             mock_exists.return_value = False
@@ -284,21 +280,19 @@ class TestControllerGenerator:
         """Test controller generation with complex names."""
         output_dir = self.temp_dir / "controllers"
 
-        with patch.object(
-            self.generator.name_utils, "validate_controller_name"
-        ), patch.object(
-            self.generator.name_utils, "normalize_controller_name"
-        ) as mock_normalize, patch.object(
-            self.generator.name_utils, "generate_class_name"
-        ) as mock_class_name, patch.object(
-            self.generator.file_handler, "file_exists"
-        ) as mock_exists, patch.object(
-            self.generator.file_handler, "ensure_directory_exists"
-        ), patch.object(
-            self.generator.file_handler, "write_file"
-        ) as mock_write, patch.object(
-            self.generator.template_renderer, "render"
-        ) as mock_render:
+        with (
+            patch.object(self.generator.name_utils, "validate_controller_name"),
+            patch.object(
+                self.generator.name_utils, "normalize_controller_name"
+            ) as mock_normalize,
+            patch.object(
+                self.generator.name_utils, "generate_class_name"
+            ) as mock_class_name,
+            patch.object(self.generator.file_handler, "file_exists") as mock_exists,
+            patch.object(self.generator.file_handler, "ensure_directory_exists"),
+            patch.object(self.generator.file_handler, "write_file") as mock_write,
+            patch.object(self.generator.template_renderer, "render") as mock_render,
+        ):
             mock_normalize.return_value = "api_v1_user_controller"
             mock_class_name.return_value = "ApiV1UserController"
             mock_exists.return_value = False
@@ -320,13 +314,11 @@ class TestControllerGenerator:
             with pytest.raises(InvalidControllerNameError):
                 self.generator.generate("invalid")
 
-        with patch.object(
-            self.generator.name_utils, "validate_controller_name"
-        ), patch.object(
-            self.generator.name_utils, "normalize_controller_name"
-        ), patch.object(
-            self.generator.file_handler, "file_exists"
-        ) as mock_exists:
+        with (
+            patch.object(self.generator.name_utils, "validate_controller_name"),
+            patch.object(self.generator.name_utils, "normalize_controller_name"),
+            patch.object(self.generator.file_handler, "file_exists") as mock_exists,
+        ):
             # Test ControllerGenerationError is re-raised
             mock_exists.side_effect = ControllerGenerationError("Generation error")
 
@@ -338,15 +330,16 @@ class TestControllerGenerator:
         output_dir = self.temp_dir / "controllers"
         output_dir.mkdir(parents=True, exist_ok=True)
 
-        with patch.object(
-            self.generator.name_utils, "validate_controller_name"
-        ), patch.object(
-            self.generator.name_utils, "normalize_controller_name"
-        ) as mock_normalize, patch.object(
-            self.generator.name_utils, "generate_class_name"
-        ) as mock_class_name, patch.object(
-            self.generator.file_handler, "file_exists"
-        ) as mock_exists:
+        with (
+            patch.object(self.generator.name_utils, "validate_controller_name"),
+            patch.object(
+                self.generator.name_utils, "normalize_controller_name"
+            ) as mock_normalize,
+            patch.object(
+                self.generator.name_utils, "generate_class_name"
+            ) as mock_class_name,
+            patch.object(self.generator.file_handler, "file_exists") as mock_exists,
+        ):
             mock_normalize.return_value = "test_controller"
             mock_class_name.return_value = "TestController"
             mock_exists.return_value = False

@@ -3,7 +3,7 @@
 You can create routes in `app/routes.py` and after creating file, you can start to register routes, e.g:
 
 ```python
-from mvc_flask import Router
+from flask_mvc import Router
 
 Router.get("/", "home#index")
 ```
@@ -54,7 +54,7 @@ The parameter only accept `string` or `array`, so, you can use `only=["index", "
 You can use namespaces to group the routes.
 
 ```python
-from mvc_flask import Router
+from flask_mvc import Router
 
 api = Router.namespace("/api/v1")
 

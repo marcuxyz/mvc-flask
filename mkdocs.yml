@@ -15,8 +15,8 @@ nav:
       - Usage: 'usage.md'
 
 
-repo_name: marcuxyz/mvc_flask
-repo_url: https://github.com/marcuxyz/mvc_flask/
+repo_name: marcuxyz/flask-mvc
+repo_url: https://github.com/marcuxyz/flask-mvc/
 edit_uri: ""
 
 markdown_extensions:

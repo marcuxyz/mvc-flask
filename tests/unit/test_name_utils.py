@@ -2,8 +2,8 @@
 
 import pytest
 
-from mvc_flask.core.exceptions import InvalidControllerNameError
-from mvc_flask.core.name_utils import NameUtils
+from flask_mvc.core.exceptions import InvalidControllerNameError
+from flask_mvc.core.name_utils import NameUtils
 
 
 class TestNameUtils:

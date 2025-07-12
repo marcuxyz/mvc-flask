@@ -1,10 +1,10 @@
 # Quickstart
 
-To start the use `mvc_flask` you need to import and register in your application, e.g:
+To start the use `flask_mvc` you need to import and register in your application, e.g:
 
 ```python
 from flask import Flask
-from mvc_flask import FlaskMVC
+from flask_mvc import FlaskMVC
 
 app = Flask(__name__)
 FlaskMVC(app)
@@ -32,7 +32,7 @@ app
     ├── index.html
 ```
 
-**By default, the mvc_flask assumes that your application directory will be app and if it doesn't exist, create it! If you can use another directory, you can use the path parameter when the instance of FlaskMVC is initialized. E.g:**
+**By default, the flask_mvc assumes that your application directory will be app and if it doesn't exist, create it! If you can use another directory, you can use the path parameter when the instance of FlaskMVC is initialized. E.g:**
 
 ```python
 mvc = FlaskMVC()

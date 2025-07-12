@@ -1,4 +1,4 @@
-"""File system utilities for MVC Flask CLI."""
+"""File system utilities for Flask MVC CLI."""
 
 from pathlib import Path
 from typing import Optional

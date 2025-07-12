@@ -6,9 +6,9 @@ authors = ["Marcus Pereira <marcus@negros.dev>"]
 maintainers = ["Marcus Pereira <marcus@negros.dev>"]
 readme = "README.md"
 license = "MIT"
-homepage = "https://github.com/marcuxyz/mvc_flask"
-repository = "https://github.com/marcuxyz/mvc_flask"
-documentation = "https://marcuxyz.github.io/mvc-flask"
+homepage = "https://github.com/marcuxyz/flask-mvc"
+repository = "https://github.com/marcuxyz/flask-mvc"
+documentation = "https://marcuxyz.github.io/flask-mvc"
 keywords = [
     "flask",
     "mvc",
@@ -36,9 +36,9 @@ classifiers = [
     "Environment :: Web Environment",
     "Operating System :: OS Independent",
 ]
-packages = [{include = "mvc_flask"}]
+packages = [{include = "flask_mvc"}]
 include = [
-    "mvc_flask/templates/**/*",
+    "flask_mvc/templates/**/*",
     "CHANGELOG.md",
     "LICENSE",
 ]
@@ -61,13 +61,12 @@ method-override = "^0.3.0"
 [tool.poetry.group.dev.dependencies]
 
 # Testing
-pytest = "^7.4.3"
+pytest = "^8.4.1"
 pytest-cov = "^4.1.0"
 pytest-mock = "^3.12.0"
 flask-sqlalchemy = "^3.0.5"
 
 # Code Quality
-black = "^23.3.0"
 flake8 = "^6.0.0"
 isort = "^5.12.0"
 mypy = "^1.5.0"
@@ -85,6 +84,7 @@ urllib3 = "^1.26.18"
 ipython = "^8.15.0"
 rich = "^13.5.0"
 bandit = "^1.8.6"
+black = "^25.1.0"
 
 [tool.poetry.group.docs.dependencies]
 mkdocs = "^1.5.3"
@@ -93,7 +93,7 @@ mkdocs-mermaid2-plugin = "^1.1.1"
 markdown-include = "^0.8.1"
 
 [tool.poetry.scripts]
-flask-mvc = "mvc_flask.cli:main"
+flask-mvc = "flask_mvc.cli:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -123,7 +123,7 @@ extend-exclude = '''
 profile = "black"
 multi_line_output = 3
 line_length = 88
-known_first_party = ["mvc_flask"]
+known_first_party = ["flask_mvc"]
 known_third_party = ["flask", "click", "jinja2"]
 
 [tool.mypy]
@@ -150,7 +150,7 @@ minversion = "7.0"
 addopts = [
     "--strict-markers",
     "--strict-config",
-    "--cov=mvc_flask",
+    "--cov=flask_mvc",
     "--cov-report=term-missing",
     "--cov-report=html",
     "--cov-report=xml",
@@ -167,7 +167,7 @@ python_classes = ["Test*"]
 python_functions = ["test_*"]
 
 [tool.coverage.run]
-source = ["mvc_flask"]
+source = ["flask_mvc"]
 omit = [
     "*/tests/*",
     "*/venv/*",
@@ -207,6 +207,6 @@ name = "cz_conventional_commits"
 version = "2.9.0"
 tag_format = "v$version"
 version_files = [
-    "mvc_flask/__version__.py",
+    "flask_mvc/__version__.py",
     "pyproject.toml:version"
 ]
