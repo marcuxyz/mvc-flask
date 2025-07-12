@@ -11,7 +11,10 @@ import click
 from flask.cli import with_appcontext
 
 from .core.config import CLIConfig
-from .core.exceptions import ControllerGenerationError, InvalidControllerNameError
+from .core.exceptions import (
+    ControllerGenerationError,
+    InvalidControllerNameError,
+)
 from .core.generators import ControllerGenerator
 
 # Configure logging

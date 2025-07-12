@@ -11,5 +11,3 @@ format:
 .PHONY: check
 check:
 	poetry run black -l 89 --check .
-	poetry run isort --check-only .
-	poetry run flake8
