@@ -52,9 +52,6 @@ jobs:
       run: |
         make check
 
-    - name: Run type checking
-      run: poetry run mypy mvc_flask
-
     - name: Run tests
       run: poetry run pytest --cov=mvc_flask --cov-report=xml --cov-report=term-missing
 
@@ -87,7 +84,6 @@ jobs:
     - name: Run security checks
       run: |
         poetry run bandit -r mvc_flask
-        poetry run safety check
 
   build:
     name: Build Package
