@@ -2,13 +2,13 @@
 Comprehensive tests for MVC Flask controllers functionality.
 """
 
-import pytest
 import json
+
+import pytest
 from flask import url_for
 
-from tests.app.models.message import Message
 from tests.app import db
-
+from tests.app.models.message import Message
 
 # CRUD Operations Tests
 

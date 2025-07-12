@@ -2,15 +2,16 @@
 Test utilities and helper functions for mvc-flask tests.
 """
 
-import pytest
-import time
 import functools
-from typing import Callable, Any, Dict, List
-from flask import Flask
+import time
 from contextlib import contextmanager
+from typing import Any, Callable, Dict, List
 
-from tests.app.models.message import Message
+import pytest
+from flask import Flask
+
 from tests.app import db
+from tests.app.models.message import Message
 
 
 class TimerUtil:

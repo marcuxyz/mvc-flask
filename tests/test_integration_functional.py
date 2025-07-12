@@ -2,16 +2,16 @@
 Integration tests for MVC Flask - testing complete workflows and interactions.
 """
 
-import pytest
+import gc
 import json
 import threading
-import gc
-from flask import url_for, Flask
 
-from tests.app.models.message import Message
+import pytest
+from flask import Flask, url_for
+
 from tests.app import db
-from tests.test_utils import TimerUtil, DatabaseHelper, ResponseHelper, performance_test
-
+from tests.app.models.message import Message
+from tests.test_utils import DatabaseHelper, ResponseHelper, TimerUtil, performance_test
 
 # Complete Workflow Tests
 

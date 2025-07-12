@@ -3,11 +3,11 @@
 from pathlib import Path
 from typing import Optional
 
-from .template_renderer import TemplateRenderer
-from .file_handler import FileHandler
-from .name_utils import NameUtils
 from .config import CLIConfig
 from .exceptions import ControllerGenerationError, InvalidControllerNameError
+from .file_handler import FileHandler
+from .name_utils import NameUtils
+from .template_renderer import TemplateRenderer
 
 
 class ControllerGenerator:

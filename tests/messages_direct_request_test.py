@@ -2,8 +2,8 @@ import json
 
 from flask import url_for
 
-from tests.app.models.message import Message
 from tests.app import db
+from tests.app.models.message import Message
 
 
 def test_create_a_message(client):

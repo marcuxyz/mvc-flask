@@ -1,10 +1,9 @@
-from flask import Flask
 from importlib import import_module
 
+from flask import Flask
 from flask.blueprints import Blueprint
 
 from .callback_middleware import CallbackMiddleware
-
 from .http.router_middleware import RouterMiddleware as Router
 
 

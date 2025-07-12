@@ -1,13 +1,10 @@
 from flask import Flask
 from method_override.wsgi_method_override import MethodOverrideMiddleware
 
-from .middlewares.http.router_middleware import RouterMiddleware as Router
-
-from .middlewares.blueprint_middleware import BlueprintMiddleware
-
-
-from .helpers.html.input_method_helper import InputMethodHelper
 from . import cli
+from .helpers.html.input_method_helper import InputMethodHelper
+from .middlewares.blueprint_middleware import BlueprintMiddleware
+from .middlewares.http.router_middleware import RouterMiddleware as Router
 
 
 class FlaskMVC:
