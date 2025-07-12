@@ -96,7 +96,7 @@ def test_version_comparison_with_previous():
     """Test that current version is reasonable compared to expected previous versions."""
     current_version = tuple(map(int, __version__.split(".")))
 
-    minimum_expected = (0,1,0)
+    minimum_expected = (0, 1, 0)
     assert (
         current_version >= minimum_expected
     ), f"Current version {__version__} is lower than expected minimum {'.'.join(map(str, minimum_expected))}"
