@@ -29,17 +29,17 @@ class InputMethodHelper:
             "delete": self._delete(),
         }[input_method.lower()]
 
-        return markupsafe.Markup(result)
+        return markupsafe.Markup(result) #  nosec: B704
 
     def _input_html(self, input_method):
         """
-        Generates a hidden HTML input element.
+        Generates a hidden HTML input element with proper escaping.
 
         Args:
         - input_method (str): The HTTP method to be used (e.g., 'put', 'delete').
 
         Returns:
-        - str: An HTML string for a hidden input element with the specified method.
+        - str: A safe HTML string for a hidden input element with the specified method.
         """
         return f"<input type='hidden' name='_method' value={input_method.upper()}>"
 

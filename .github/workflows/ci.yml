@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
@@ -50,9 +50,7 @@ jobs:
 
     - name: Run linting
       run: |
-        poetry run black -l 89 --check .
-        poetry run isort --check-only .
-        poetry run flake8
+        make check
 
     - name: Run type checking
       run: poetry run mypy mvc_flask
